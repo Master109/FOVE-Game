@@ -21,6 +21,6 @@ public class ScoreDataBtn : MonoBehaviour {
     }
     void Clicking()
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("ScoreData", LoadSceneMode.Single);
     }
 }

@@ -9,7 +9,7 @@ public class LoginBtn : MonoBehaviour {
 
     public Button logbtn;
     public InputField User;
-    private string temp;
+    private string temp = "";
     
     // Use this for initialization
     void Start()
@@ -26,8 +26,12 @@ public class LoginBtn : MonoBehaviour {
     void Clicking()
     {
         //add code to grab username here
-        StreamWriter injection = new StreamWriter("Username.txt", true);
+        StreamWriter injection = new StreamWriter("Username.txt");
+        injection.AutoFlush=true;
         temp = User.text;
+        if (temp == "")
+            temp = "Douche Baggins";
+        
         injection.Write(temp);
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
