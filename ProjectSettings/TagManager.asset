@@ -15,7 +15,7 @@ TagManager:
   - 
   - Player
   - Hazard
-  - 
+  - Powerup
   - 
   - 
   - 
@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Back
+    uniqueID: 1548046867
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Front
+    uniqueID: 1161719695
+    locked: 0
+  - name: UI
+    uniqueID: 891868215
     locked: 0

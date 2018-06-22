@@ -100,7 +100,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		GameObject output = null;
 		for (int i = 0; i < spawnEntries.Length; i ++)
 		{
-			if (prefab.name == spawnEntries[i].prefab.name)
+			if (prefab == spawnEntries[i].prefab)
 			{
 				output = Spawn(i, position, rotation, parent);
 				break;
@@ -112,7 +112,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 	public GameObject Despawn (int prefabIndex, GameObject go, Transform trs)
 	{
 		go.SetActive(false);
-		trs.SetParent(trs);
+		trs.SetParent(trs, true);
 		spawnEntries[prefabIndex].cache.Remove(go);
 		return go;
 	}
@@ -134,7 +134,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		}
 		else if (instance != this)
 		{
-			DestroyImmediate(gameObject);
+			Destroy(gameObject);
 			return;
 		}
 		if (Application.isPlaying)

@@ -6,9 +6,11 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 {
 	public Transform trs;
 	Vector3 shipPositionOffset;
+	public bool useMouse;
 	
-	public virtual void Start ()
+	public override void Start ()
 	{
+		base.Start ();
 		shipPositionOffset = trs.position - PlayerShip.GetInstance().trs.position;
 	}
 	
