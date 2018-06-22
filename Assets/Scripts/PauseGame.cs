@@ -17,9 +17,12 @@ public class PauseGame : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //check if esc key is pressed
 		if(Input.GetKeyDown(KeyCode.Escape))
         {
+            //invert is pause value
             IsPause = !IsPause;
+            //pause or unpause game
             if (IsPause)
                 Time.timeScale = 0;
             else
@@ -30,6 +33,7 @@ public class PauseGame : MonoBehaviour {
     {
         if(IsPause)
         {
+            //open pause menu when game is paused
             SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
         }
     }
