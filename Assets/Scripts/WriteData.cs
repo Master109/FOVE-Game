@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using System;
 
 public class WriteData : MonoBehaviour {
 
@@ -26,7 +26,7 @@ public class WriteData : MonoBehaviour {
         ProbeName = new StreamReader("Username.txt");
         ProbeScore = new StreamReader("Score.txt");
         //Injector.AutoFlush = true;
-        DataEntry = ProbeName.ReadLine() + "\t" + ProbeScore.ReadLine() + "\n"; //add other data here before end line character
+        DataEntry = ProbeName.ReadLine() + "\t" + ProbeScore.ReadLine() + Environment.NewLine; //add other data here before end line character
         Injector.Write(DataEntry);
         Injector.Flush();
         Injector.Close();
