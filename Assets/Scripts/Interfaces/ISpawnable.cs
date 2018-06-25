@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ISpawnable
 {
 	int PrefabIndex { get; }
+	float Radius { get; }
 }

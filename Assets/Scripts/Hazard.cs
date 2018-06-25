@@ -16,6 +16,13 @@ public class Hazard : MonoBehaviour, ISpawnable
 	public bool useVariations;
 	Transform variationTrs;
 	public float radius;
+	public float Radius
+	{
+		get
+		{
+			return radius;
+		}
+	}
 	
 	public virtual void Start ()
 	{
@@ -30,6 +37,6 @@ public class Hazard : MonoBehaviour, ISpawnable
 	{
 		if (coll.collider != PlayerShip.instance.collider)
 			return;
-		
+		ProceduralLevel.instance.LoseLevel ();
 	}
 }

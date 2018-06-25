@@ -26,6 +26,11 @@ namespace ClassExtensions
 			return SetAlpha (c, c.a / a);
 		}
 		
+		public static Color RandomColor ()
+		{
+			return new Color(Random.value, Random.value, Random.value);
+		}
+		
 		public static byte[] ToBytes (this Color color)
 		{
 			byte[] bytes = new byte[4];
