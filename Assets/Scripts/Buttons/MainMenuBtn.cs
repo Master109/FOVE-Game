@@ -10,6 +10,7 @@ public class MainMenuBtn : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //make button do thing when pressed
         Button btn = backbtn.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
     }
@@ -21,6 +22,7 @@ public class MainMenuBtn : MonoBehaviour {
     }
     void Clicking()
     {
+        //swap to main menu
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

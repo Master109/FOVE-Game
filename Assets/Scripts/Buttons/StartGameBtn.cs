@@ -10,6 +10,7 @@ public class StartGameBtn : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        //make button do thing when pressed
         Button btn = StartBtn.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
     }
@@ -20,6 +21,7 @@ public class StartGameBtn : MonoBehaviour {
 	}
     void Clicking()
     {
+        //swap to actual game
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 }

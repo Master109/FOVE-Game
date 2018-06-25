@@ -10,6 +10,7 @@ public class ScoreDataBtn : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //make button do thing when pressed
         Button btn = ScoreBtn.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
     }
@@ -21,6 +22,7 @@ public class ScoreDataBtn : MonoBehaviour {
     }
     void Clicking()
     {
+        //swap to scoredata menu
         SceneManager.LoadScene("ScoreData", LoadSceneMode.Single);
     }
 }

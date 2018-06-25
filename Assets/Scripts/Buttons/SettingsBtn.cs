@@ -10,6 +10,7 @@ public class SettingsBtn : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //make button do thing when pressed
         Button btn = backbtn.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
     }
@@ -21,6 +22,7 @@ public class SettingsBtn : MonoBehaviour {
     }
     void Clicking()
     {
+        //swap to settings menu
         SceneManager.LoadScene("SettingsMenu", LoadSceneMode.Single);
     }
 }

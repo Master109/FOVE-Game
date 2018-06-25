@@ -44,9 +44,11 @@ public class TestBtn : MonoBehaviour {
     }
     public void AddItem(Text item)
     {
-        
-        item.transform.SetParent(vert.transform, false);
-        item.transform.localScale = autoLocalScale;
-        item.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        Text go = Instantiate(TestText) as Text;
+        //go.SetActive(true);
+        Text TB = go.GetComponent<Text>();
+        //TB.SetName(str);
+        go.transform.SetParent(TestText.transform.parent);
     }
 }
