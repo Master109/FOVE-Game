@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using ClassExtensions;
 using System;
 
 [ExecuteInEditMode]
@@ -10,8 +11,10 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 	public Transform trs;
 	public SpawnEntry[] spawnEntries;
 	public Dictionary<string, SpawnEntry> spawnEntriesNames = new Dictionary<string, SpawnEntry>();
-	List<DelayedDespawn> delayedDespawns = new List<DelayedDespawn>();
-	List<RangedDespawn> rangedDespawns = new List<RangedDespawn>();
+	[HideInInspector]
+	public List<DelayedDespawn> delayedDespawns = new List<DelayedDespawn>();
+	[HideInInspector]
+	public List<RangedDespawn> rangedDespawns = new List<RangedDespawn>();
 	[HideInInspector]
 	public List<SpawnedEntry> spawnedEntries = new List<SpawnedEntry>();
 	
@@ -60,16 +63,17 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		public float range;
 	}
 	
-	public void DelayDespawn (int prefabIndex, GameObject clone, Transform trs, float delay)
+	public DelayedDespawn DelayDespawn (int prefabIndex, GameObject clone, Transform trs, float delay)
 	{
 		DelayedDespawn delayedDespawn = new DelayedDespawn();
 		delayedDespawn.prefabIndex = prefabIndex;
 		delayedDespawn.spawnedEntry = new SpawnedEntry(spawnEntries[prefabIndex].prefab, clone, trs);
 		delayedDespawn.life = delay;
 		delayedDespawns.Add(delayedDespawn);
+		return delayedDespawn;
 	}
 	
-	public void RangeDespawn (int prefabIndex, GameObject clone, Transform trs, float range)
+	public RangedDespawn RangeDespawn (int prefabIndex, GameObject clone, Transform trs, float range)
 	{
 		RangedDespawn rangedDespawn = new RangedDespawn();
 		rangedDespawn.prefabIndex = prefabIndex;
@@ -77,6 +81,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		rangedDespawn.range = range;
 		rangedDespawn.previousPos = trs.localPosition;
 		rangedDespawns.Add(rangedDespawn);
+		return rangedDespawn;
 	}
 	
 	public GameObject Spawn (int prefabIndex, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion(), Transform parent = null)
@@ -85,12 +90,12 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 			Preload (prefabIndex);
 		GameObject clone = spawnEntries[prefabIndex].cache[0];
 		spawnEntries[prefabIndex].cache.RemoveAt(0);
-		clone.SetActive(true);
 		SpawnedEntry entry = new SpawnedEntry(spawnEntries[prefabIndex].prefab, clone, clone.GetComponent<Transform>());
 		entry.trs.position = position;
 		entry.trs.rotation = rotation;
 		entry.trs.localScale = spawnEntries[prefabIndex].trs.localScale;
 		entry.trs.SetParent(parent, true);
+		clone.SetActive(true);
 		spawnedEntries.Add(entry);
 		return entry.go;
 	}
@@ -100,7 +105,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		GameObject output = null;
 		for (int i = 0; i < spawnEntries.Length; i ++)
 		{
-			if (prefab == spawnEntries[i].prefab)
+			if (prefab.name == spawnEntries[i].prefab.name)
 			{
 				output = Spawn(i, position, rotation, parent);
 				break;
@@ -112,7 +117,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 	public GameObject Despawn (int prefabIndex, GameObject go, Transform trs)
 	{
 		go.SetActive(false);
-		trs.SetParent(trs, true);
+		trs.SetParent(trs);
 		spawnEntries[prefabIndex].cache.Remove(go);
 		return go;
 	}
@@ -134,7 +139,7 @@ public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 		}
 		else if (instance != this)
 		{
-			Destroy(gameObject);
+			DestroyImmediate(gameObject);
 			return;
 		}
 		if (Application.isPlaying)

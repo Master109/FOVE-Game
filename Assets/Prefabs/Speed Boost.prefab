@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dbfeaa484632a541b5827b4d3e6ef1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trs: {fileID: 4093462498178512}
   prefabIndex: 1
   radius: 4.5
   addToMoveSpeed: 15

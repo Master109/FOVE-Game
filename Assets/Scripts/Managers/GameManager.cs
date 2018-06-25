@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
 	public virtual void LoadScene (string sceneName)

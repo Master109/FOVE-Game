@@ -41,6 +41,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	{
 		base.Start ();
 		tunnelMat.color = ColorExtensions.RandomColor();
+		//This is how you start a coroutine (think of a coroutine as a function that can be run at the same time as other code)
 		StartCoroutine(SpawnHazards ());
 		StartCoroutine(PickNewTunnelColor ());
 		StartCoroutine(SpawnPowerups ());
@@ -61,26 +62,28 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		scoreText.text = "" + (int) score + "|" + BestScore;
 	}
 	
+	//Use IEnumerator to set up a coroutine
 	public virtual IEnumerator PickNewTunnelColor ()
 	{
 		while (true)
 		{
 			nextTunnelColor = ColorExtensions.RandomColor();
+			//This will make the coroutine "not run" for the number of seconds equal to pickNewColorRate
 			yield return new WaitForSeconds(pickNewColorRate);
 		}
 	}
 	
 	public virtual IEnumerator SpawnPowerups ()
 	{
+		PowerupEntry powerupEntry = null;
 		while (true)
 		{
-			PowerupEntry powerupEntry = null;
 			do
 			{
 				powerupEntry = powerupEntries[Random.Range(0, powerupEntries.Length)];
 			}
 			while (Random.value > powerupEntry.chance);
-			Powerup powerup = (Powerup) ObjectPool.instance.Spawn(powerupEntry.powerupPrefab.gameObject, GetRandomSpawnPoint(powerupEntry.powerupPrefab)).GetComponent<Powerup>();
+			ObjectPool.instance.Spawn(powerupEntry.powerupPrefab.gameObject, GetRandomSpawnPoint(powerupEntry.powerupPrefab), powerupEntry.powerupPrefab.trs.rotation);
 			yield return new WaitForSeconds(powerupSpawnRate);
 		}
 	}
@@ -88,7 +91,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public virtual Vector3 GetRandomSpawnPoint (ISpawnable spawnable)
 	{
 		Vector3 output = Random.insideUnitCircle * (tunnelCollider.bounds.extents.x - spawnable.Radius);
-		output.z = Random.Range(PlayerShip.instance.trs.position.z + minZSpawnDist, PlayerShip.instance.trs.position.z + tunnelCollider.bounds.size.z);
+		output.z = Random.Range(PlayerShip.GetInstance().trs.position.z + minZSpawnDist, PlayerShip.instance.trs.position.z + tunnelCollider.bounds.size.z);
 		return output;
 	}
      	
@@ -138,6 +141,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		GameManager.instance.RestartScene ();
 	}
 	
+	//Applying the "Serializable" attribute of the "System" namespace makes any 
+	//(instance of the data type)'svalues able to be edited in Unity's inspector
 	[System.Serializable]
 	public class HazardEntry
 	{

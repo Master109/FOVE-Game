@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d170ae5678f78c0408a3a4ea3a648711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trs: {fileID: 4706130706615690}
   prefabIndex: 2
   radius: 1.45
   addToScore: 1

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//A class can extend from a maximum of one class, but can implement as many interfaces as it wants.
+//For example: "Hazard : MonoBehaviour, ISpawnable, Interface2, Interface3, ..."
 public class Hazard : MonoBehaviour, ISpawnable
 {
 	public int prefabIndex;
