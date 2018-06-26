@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99183c25c11be3b4e90e305a3c3f3eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backbtn: {fileID: 176158737}
+  MainMenu: {fileID: 176158737}
 --- !u!114 &176158737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34aacc8c1910e7842b22422455ccccc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Quitbtn: {fileID: 2134669946}
+  quit: {fileID: 2134669946}
 --- !u!114 &2134669946
 MonoBehaviour:
   m_ObjectHideFlags: 0

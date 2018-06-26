@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99183c25c11be3b4e90e305a3c3f3eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backbtn: {fileID: 1519153111}
+  MainMenu: {fileID: 1519153111}
 --- !u!114 &1519153111
 MonoBehaviour:
   m_ObjectHideFlags: 0
