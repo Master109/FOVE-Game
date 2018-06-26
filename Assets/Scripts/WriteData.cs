@@ -10,7 +10,8 @@ public class WriteData : MonoBehaviour {
     public StreamReader ProbeName;
     public StreamReader ProbeScore;
     private string DataEntry;
-
+    
+    
     // Use this for initialization
     void Start()
     {
@@ -20,8 +21,9 @@ public class WriteData : MonoBehaviour {
 	void Update () {
 		
 	}
-    void Writing()
+    public void Writing()
     {
+        
         //define streams
         Injector = new StreamWriter("Data.txt", true);
         ProbeName = new StreamReader("Username.txt");
@@ -32,10 +34,7 @@ public class WriteData : MonoBehaviour {
         Injector.Write(DataEntry);
         //push data from memory to file
         Injector.Flush();
-        //close streams
-        Injector.Close();
-        ProbeName.Close();
-        ProbeScore.Close();
+        
     }
 	
 	void OnApplicationQuit()

@@ -11,6 +11,7 @@ public class MainMenuBtn : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        //set up button
         Button btn = MainMenu.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
 	}
@@ -21,6 +22,7 @@ public class MainMenuBtn : MonoBehaviour {
 	}
     void Clicking()
     {
+        //change to main menu
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
 
     }

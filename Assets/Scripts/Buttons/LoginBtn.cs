@@ -39,7 +39,7 @@ public class LoginBtn : MonoBehaviour {
         injection.Write(temp);
         //close stream
         injection.Close();
-        //swap to min menu
+        //swap to main menu
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

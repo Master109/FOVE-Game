@@ -10,6 +10,7 @@ public class QuitBtn : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        //set up button
         Button btn = quit.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
 	}
@@ -20,6 +21,7 @@ public class QuitBtn : MonoBehaviour {
 	}
     void Clicking()
     {
+        //quit game
         Application.Quit();
     }
 }
