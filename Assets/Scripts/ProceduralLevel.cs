@@ -136,8 +136,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	
 	public virtual void LoseLevel ()
 	{
-		if ((int) Time.time > BestScore)
-			BestScore = (int) Time.time;
+		if ((int) Time.timeSinceLevelLoad > BestScore)
+			BestScore = (int) Time.timeSinceLevelLoad;
 		GameManager.instance.RestartScene ();
 	}
 	
