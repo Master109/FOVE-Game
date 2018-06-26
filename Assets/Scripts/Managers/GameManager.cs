@@ -30,8 +30,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 		LoadScene (SceneManager.GetActiveScene().name);
 	}
 	
-	void OnApplicationQuit ()
+	public virtual void Quit ()
 	{
-		PlayerPrefs.DeleteAll();
+		Application.Quit ();
+	}
+	
+	public virtual void OnApplicationQuit ()
+	{
+		//PlayerPrefs.DeleteAll();
 	}
 }
