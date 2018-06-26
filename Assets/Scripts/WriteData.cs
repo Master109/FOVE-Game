@@ -37,4 +37,9 @@ public class WriteData : MonoBehaviour {
         ProbeName.Close();
         ProbeScore.Close();
     }
+	
+	void OnApplicationQuit()
+	{
+		
+	}
 }
