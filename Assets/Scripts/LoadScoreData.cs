@@ -28,24 +28,18 @@ public class LoadScoreData : MonoBehaviour {
         ScrollRect Scroll = SomeScrollRect.GetComponent<ScrollRect>();
         while (!Probe.EndOfStream)
         {
+            // read score
             temp = Probe.ReadLine();
-
+            //  create new text
             DefaultControls.Resources TempResource = new DefaultControls.Resources();
             GameObject NewText = DefaultControls.CreateText(TempResource);
             NewText.AddComponent<LayoutElement>();
             NewText.AddComponent<GUIText>();
             NewText.transform.SetParent(Scroll.transform);
+            // assign score to text
             NewText.GetComponent<Text>().text = temp;
         } 
     }
     
-    /*
-      //this kinda works... but need way to get it in scroll bar
-    private void OnGUI()
-    {
-        Probe = new StreamReader("Data.txt");
-        temp = Probe.ReadToEnd();
-        GUI.Label(TextArea, temp)
-    }
-    */
+    
 }
