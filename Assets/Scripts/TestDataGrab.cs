@@ -25,5 +25,6 @@ public class TestDataGrab : MonoBehaviour {
         Injection = new StreamWriter("TestDataOutput.txt", true);
         Injection.Write(FoveInterface2.instance.GetGazeConvergence_Raw());
         Injection.Write(Environment.NewLine);
+        Injection.Flush();
     }
 }
