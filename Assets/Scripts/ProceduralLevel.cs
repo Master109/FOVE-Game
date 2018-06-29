@@ -38,6 +38,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public float powerupSpawnRate;
 	[HideInInspector]
 	public float score;
+    [HideInInspector]
     public EndGameBtn endGame;
 	
 	public override void Start ()
