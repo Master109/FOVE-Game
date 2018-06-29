@@ -4,6 +4,8 @@ using UnityEngine;
 using ClassExtensions;
 using UnityEngine.UI;
 
+
+
 public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 {
 	public HazardEntry[] hazardEntries;
@@ -36,6 +38,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public float powerupSpawnRate;
 	[HideInInspector]
 	public float score;
+    public EndGameBtn endGame;
 	
 	public override void Start ()
 	{
@@ -138,6 +141,9 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	{
 		if ((int) Time.timeSinceLevelLoad > BestScore)
 			BestScore = (int) Time.timeSinceLevelLoad;
+        //save score to text file
+        endGame = GetComponent<EndGameBtn>();
+        endGame.SaveScore(score);
 		GameManager.instance.RestartScene ();
 	}
 	
