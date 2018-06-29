@@ -18,34 +18,43 @@ public class EndGameBtn : MonoBehaviour {
 		
 	}
 
+    public static EndGameBtn instance;
+    //constructor
+    public EndGameBtn()
+    {
+
+    }
+    
+
     //write score to file, wrote multiple overloads for different number types
     public void SaveScore(float score)
     {
-        Injector = new StreamWriter("Score.txt", false);
-        Injector.Write(score.ToString());
+        //Injector = new StreamWriter("Score.txt", false);
+        //Injector.Write(score.ToString());
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
     }
 
     public void SaveScore(int score)
     {
-        Injector = new StreamWriter("Score.txt", false);
-        Injector.Write(score.ToString());
+        File.WriteAllText("Score.txt", score.ToString());
     }
 
     public void SaveScore(double score)
     {
-        Injector = new StreamWriter("Score.txt", false);
-        Injector.Write(score.ToString());
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
     }
 
     public void SaveScore(short score)
     {
-        Injector = new StreamWriter("Score.txt", false);
-        Injector.Write(score.ToString());
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
     }
 
     public void SaveScore(long score)
     {
-        Injector = new StreamWriter("Score.txt", false);
-        Injector.Write(score.ToString());
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
     }
 }
