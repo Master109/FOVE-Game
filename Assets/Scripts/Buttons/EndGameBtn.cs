@@ -19,7 +19,7 @@ public class EndGameBtn : MonoBehaviour {
 	}
 
     public static EndGameBtn instance;
-    //constructor
+    //empty constructor
     public EndGameBtn()
     {
 
