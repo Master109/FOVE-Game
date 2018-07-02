@@ -197,11 +197,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
   m_IsPrefabParent: 0
---- !u!20 &12243595 stripped
-Camera:
-  m_PrefabParentObject: {fileID: 20929259866081702, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-    type: 2}
-  m_PrefabInternal: {fileID: 12243594}
 --- !u!1 &77461653
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +540,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 12243595}
+  m_Camera: {fileID: 2005109663}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2038,6 +2033,11 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!20 &2005109663 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 20345315788293578, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+    type: 2}
+  m_PrefabInternal: {fileID: 12243594}
 --- !u!1 &2118755125
 GameObject:
   m_ObjectHideFlags: 0

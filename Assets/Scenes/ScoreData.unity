@@ -630,7 +630,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 2029187430}
+  m_Camera: {fileID: 2040387019}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -638,8 +638,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 891868215
+  m_SortingOrder: 32767
   m_TargetDisplay: 0
 --- !u!224 &748703756
 RectTransform:
@@ -1480,8 +1480,8 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
   m_IsPrefabParent: 0
---- !u!20 &2029187430 stripped
+--- !u!20 &2040387019 stripped
 Camera:
-  m_PrefabParentObject: {fileID: 20929259866081702, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+  m_PrefabParentObject: {fileID: 20345315788293578, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
     type: 2}
   m_PrefabInternal: {fileID: 2029187429}

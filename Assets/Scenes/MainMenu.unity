@@ -301,25 +301,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
       propertyPath: isDirty
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
       propertyPath: bMat
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1613994855873078, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759635938969140, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
       propertyPath: bMat
       value: 
@@ -328,10 +320,19 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1759635938969140, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114965850762986790, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
       propertyPath: useMouse
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+        type: 2}
+      propertyPath: isDirty
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114965850762986790, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
@@ -343,9 +344,8 @@ Prefab:
       propertyPath: cursorHoverTimerIndicator
       value: 
       objectReference: {fileID: 656269858}
-    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: isDirty
+    - target: {fileID: 1613994855873078, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1115,7 +1115,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1730991247}
+  m_Camera: {fileID: 1772761315}
   m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1624,9 +1624,9 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1710385685}
---- !u!20 &1730991247 stripped
+--- !u!20 &1772761315 stripped
 Camera:
-  m_PrefabParentObject: {fileID: 20929259866081702, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+  m_PrefabParentObject: {fileID: 20345315788293578, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
     type: 2}
   m_PrefabInternal: {fileID: 560105895}
 --- !u!1 &1774406532

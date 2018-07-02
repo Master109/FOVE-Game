@@ -12,13 +12,13 @@ public class CustomButton : MonoBehaviour
 	public Button button;
 	public float hoverTimeToPress;
 	float hoverTimeRemainingToPress;
-	bool previouslyBeingLookedAt;
-	bool beingLookedAt;
-	bool IsBeingLookedAt
+	bool previouslyHoveringOver;
+	bool hoveringOver;
+	bool IsHoveringOver
 	{
 		get
 		{
-			return rectTrs.Raycast(FoveInterface2.instance.GetGazeConvergence().ray);
+			return rectTrs.GetRectInWorld().Contains(ApplicationUser.instance.cursor.position);
 		}
 	}
 	
@@ -36,11 +36,10 @@ public class CustomButton : MonoBehaviour
 	{
 		if (!Application.isPlaying)
 			return;
-		beingLookedAt = IsBeingLookedAt;
-		if (beingLookedAt)
+		hoveringOver = IsHoveringOver;
+		if (hoveringOver)
 		{
 			hoverTimeRemainingToPress -= Time.deltaTime;
-			Debug.Log(hoverTimeRemainingToPress);
 			ApplicationUser.instance.cursorHoverTimerIndicator.fillAmount = hoverTimeRemainingToPress / hoverTimeToPress;
 			if (hoverTimeRemainingToPress < 0)
 			{
@@ -52,10 +51,10 @@ public class CustomButton : MonoBehaviour
 		else
 		{
 			hoverTimeRemainingToPress = hoverTimeToPress;
-			if (previouslyBeingLookedAt)
+			if (previouslyHoveringOver)
 				ApplicationUser.instance.cursorHoverTimerIndicator.fillAmount = 1;
 		}
-		previouslyBeingLookedAt = beingLookedAt;
+		previouslyHoveringOver = hoveringOver;
 	}
 	
 	public virtual void Press ()

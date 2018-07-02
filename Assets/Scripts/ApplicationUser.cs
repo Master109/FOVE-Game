@@ -15,6 +15,7 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 	public Transform cameraTrs;
 	float cursorDist;
 	Vector3 newCursorPosition;
+	Ray mouseRay;
 	
 	public override void Start ()
 	{
@@ -29,8 +30,16 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 	{
 		if (PlayerShip.instance != null)
 			trs.position = PlayerShip.instance.trs.position + shipPositionOffset;
-		newCursorPosition = cursorPlane.GetRayIntersect(FoveInterface2.instance.GetGazeConvergence().ray);
-		cursor.position = cameraTrs.position + ((newCursorPosition - cameraTrs.position).normalized * cursorDist);
-		cursor.forward = FoveInterface2.instance.GetGazeConvergence().ray.direction;
+		if (!useMouse)
+		{
+			newCursorPosition = cursorPlane.GetRayIntersect(FoveInterface2.instance.GetGazeConvergence().ray);
+			cursor.position = cameraTrs.position + ((newCursorPosition - cameraTrs.position).normalized * cursorDist);
+			cursor.forward = FoveInterface2.instance.GetGazeConvergence().ray.direction;
+		}
+		else
+		{
+			mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			cursor.position = cursor.GetPlaneInWorld().GetRayIntersect(mouseRay);
+		}
 	}
 }
