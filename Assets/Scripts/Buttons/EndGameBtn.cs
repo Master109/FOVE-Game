@@ -57,4 +57,10 @@ public class EndGameBtn : MonoBehaviour {
         int temp = (int)score;
         File.WriteAllText("Score.txt", temp.ToString());
     }
+
+    public void SaveScore(byte score)
+    {
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
+    }
 }
