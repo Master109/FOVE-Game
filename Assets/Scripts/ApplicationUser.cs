@@ -1,21 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using ClassExtensions;
 
 public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 {
 	public Transform trs;
 	Vector3 shipPositionOffset;
 	public bool useMouse;
+	public RectTransform cursor;
+	public Image cursorHoverTimerIndicator;
+	public Plane cursorPlane;
+	public Transform cameraTrs;
+	float cursorDist;
+	Vector3 newCursorPosition;
 	
 	public override void Start ()
 	{
 		base.Start ();
-		shipPositionOffset = trs.position - PlayerShip.GetInstance().trs.position;
+		if (PlayerShip.GetInstance() != null)
+			shipPositionOffset = trs.position - PlayerShip.instance.trs.position;
+		cursorPlane = new Plane(cursor.forward, cursor.position);
+		cursorDist = Vector3.Distance(cameraTrs.position, cursor.position);
 	}
 	
 	public virtual void Update ()
 	{
-		trs.position = PlayerShip.instance.trs.position + shipPositionOffset;
+		if (PlayerShip.instance != null)
+			trs.position = PlayerShip.instance.trs.position + shipPositionOffset;
+		newCursorPosition = cursorPlane.GetRayIntersect(FoveInterface2.instance.GetGazeConvergence().ray);
+		cursor.position = cameraTrs.position + ((newCursorPosition - cameraTrs.position).normalized * cursorDist);
+		cursor.forward = FoveInterface2.instance.GetGazeConvergence().ray.direction;
 	}
 }
