@@ -7,3 +7,4 @@ Test Nme	100
 Gilead	119Test Nme	100
 Test Nme	100
 Test Nme	25
+Test Nme	18
