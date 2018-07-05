@@ -1016,9 +1016,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
+          type: 2}
+        m_MethodName: MakeSoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: fe6037f4f0f088643aa5569e6c25e36e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 114449322571540122, guid: d342c86fded13054b98aed09e5a4d29e,
           type: 2}
-        m_MethodName: LoadScene
+        m_MethodName: LoadSceneAsync
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1754,7 +1767,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114449322571540122, guid: d342c86fded13054b98aed09e5a4d29e,
           type: 2}
-        m_MethodName: LoadScene
+        m_MethodName: LoadSceneAsync
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1762,6 +1775,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: ScoreData
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
+          type: 2}
+        m_MethodName: MakeSoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: fe6037f4f0f088643aa5569e6c25e36e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1928,6 +1954,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Game
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
+          type: 2}
+        m_MethodName: MakeSoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: fe6037f4f0f088643aa5569e6c25e36e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,

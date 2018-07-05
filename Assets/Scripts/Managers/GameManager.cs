@@ -35,6 +35,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 		Application.Quit ();
 	}
 	
+	public void LoadSceneAsync (string sceneName)
+	{
+		SceneManager.LoadSceneAsync(sceneName);
+	}
+	
 	public virtual void OnApplicationQuit ()
 	{
 		//PlayerPrefs.DeleteAll();
