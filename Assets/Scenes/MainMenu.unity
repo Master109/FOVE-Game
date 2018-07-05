@@ -918,6 +918,7 @@ GameObject:
   - component: {fileID: 1040150634}
   - component: {fileID: 1040150633}
   - component: {fileID: 1040150632}
+  - component: {fileID: 1040150637}
   m_Layer: 5
   m_Name: SettingsBtn
   m_TagString: Untagged
@@ -1029,16 +1030,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114449322571540122, guid: d342c86fded13054b98aed09e5a4d29e,
-          type: 2}
-        m_MethodName: LoadSceneAsync
+      - m_Target: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+        m_MethodName: set_name
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: SettingsMenu
+          m_StringArgument: LoadSceneDelay
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1076,6 +1076,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1040150630}
+--- !u!114 &1040150637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040150630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: SettingsMenu
+  btnStuff: {fileID: 1040150634}
 --- !u!1 &1110541215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,6 +1680,7 @@ GameObject:
   - component: {fileID: 1774406536}
   - component: {fileID: 1774406535}
   - component: {fileID: 1774406534}
+  - component: {fileID: 1774406539}
   m_Layer: 5
   m_Name: ScoreDataBtn
   m_TagString: Untagged
@@ -1765,16 +1779,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114449322571540122, guid: d342c86fded13054b98aed09e5a4d29e,
-          type: 2}
-        m_MethodName: LoadSceneAsync
+      - m_Target: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+        m_MethodName: set_name
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: ScoreData
+          m_StringArgument: LoadSceneDelay
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
@@ -1825,6 +1838,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1774406532}
+--- !u!114 &1774406539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1774406532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: ScoreData
+  btnStuff: {fileID: 1774406536}
 --- !u!1 &1918243968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,6 +1864,7 @@ GameObject:
   - component: {fileID: 1918243972}
   - component: {fileID: 1918243971}
   - component: {fileID: 1918243970}
+  - component: {fileID: 1918243975}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -1944,16 +1971,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114449322571540122, guid: d342c86fded13054b98aed09e5a4d29e,
-          type: 2}
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+        m_MethodName: set_name
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Game
+          m_StringArgument: LoadSceneDelay
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
@@ -1996,3 +2022,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1918243975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1918243968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Game
+  btnStuff: {fileID: 1918243972}
