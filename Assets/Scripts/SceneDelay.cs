@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SceneDelay : MonoBehaviour {
     public string sceneName;
-    //public int sceneDelay;
+    public float sceneDelay;
     public Button btnStuff;
 
 	// Use this for initialization
@@ -21,13 +21,28 @@ public class SceneDelay : MonoBehaviour {
 	void Update () {
 		
 	}
+    /*
     IEnumerator Waiting(string sceneName)
     {
         yield return new WaitForSeconds(0.9f);
         SceneManager.LoadScene(sceneName);
     }
+    */
+    IEnumerator Waiting(string sceneName)
+    {
+        if (sceneDelay == 0||sceneDelay==0.0f)
+            sceneDelay = 0.9f;
+        yield return new WaitForSeconds(sceneDelay);
+        SceneManager.LoadScene(sceneName);
+    }
 
     IEnumerator Waiting(string sceneName, int time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator Waiting(string sceneName, float time)
     {
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(sceneName);

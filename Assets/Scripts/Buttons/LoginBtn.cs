@@ -15,6 +15,7 @@ public class LoginBtn : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        User.Select();
         //make button do something when pressed
         Button btn = logbtn.GetComponent<Button>();
         btn.onClick.AddListener(Clicking);
