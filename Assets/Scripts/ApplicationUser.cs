@@ -29,11 +29,8 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 		if (useMouse)
 		{
 			foveCameraTrs.gameObject.SetActive(false);
+			mouseCameraTrs.gameObject.SetActive(true);
 			cameraTrs = mouseCameraTrs;
-		}
-		else
-		{
-			mouseCameraTrs.gameObject.SetActive(false);
 		}
 	}
 	

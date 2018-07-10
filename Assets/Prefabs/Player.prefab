@@ -695,7 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trs: {fileID: 4671932422542494}
-  useMouse: 0
+  useMouse: 1
   cursor: {fileID: 0}
   cursorHoverTimerIndicator: {fileID: 0}
   cameraTrs: {fileID: 4009267536673914}
