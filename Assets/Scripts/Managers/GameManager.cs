@@ -47,11 +47,17 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     IEnumerator Waiting(string sceneName)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.9f);
         SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator Waiting(string sceneName, int time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator Waiting(string sceneName, float time)
     {
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(sceneName);
@@ -71,4 +77,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 	{
 		SceneManager.UnloadSceneAsync(sceneName);
 	}
+	
+    public virtual void LoadSceneDelay(string sceneName, float time)
+    {
+        StartCoroutine(Waiting(sceneName, time));
+    }
 }
