@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4725454500631852}
   - component: {fileID: 20345315788293578}
   - component: {fileID: 114131055112337118}
+  - component: {fileID: 81653924488995176}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 20929259866081702}
   - component: {fileID: 114377206307430766}
   - component: {fileID: 114751860812849668}
+  - component: {fileID: 81253256657106356}
   m_Layer: 8
   m_Name: Fove Interface 2
   m_TagString: Untagged
@@ -280,6 +282,20 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: add769d179a9826498fc063c005d35bd, type: 3}
+--- !u!81 &81253256657106356
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1759635938969140}
+  m_Enabled: 1
+--- !u!81 &81653924488995176
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628043745976352}
+  m_Enabled: 1
 --- !u!114 &114120740584200100
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ public class EndGameBtn : MonoBehaviour {
 	}
 
     public static EndGameBtn instance;
-    //constructor
+    //empty constructor
     public EndGameBtn()
     {
 
@@ -53,6 +53,12 @@ public class EndGameBtn : MonoBehaviour {
     }
 
     public void SaveScore(long score)
+    {
+        int temp = (int)score;
+        File.WriteAllText("Score.txt", temp.ToString());
+    }
+
+    public void SaveScore(byte score)
     {
         int temp = (int)score;
         File.WriteAllText("Score.txt", temp.ToString());

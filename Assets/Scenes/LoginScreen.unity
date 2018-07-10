@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 1901615465}
   - component: {fileID: 1901615464}
   - component: {fileID: 1901615468}
+  - component: {fileID: 1901615469}
   m_Layer: 5
   m_Name: LoginBtn
   m_TagString: Untagged
@@ -1035,6 +1036,19 @@ MonoBehaviour:
           m_StringArgument: Clicking
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 114237759211360204, guid: d342c86fded13054b98aed09e5a4d29e,
+          type: 2}
+        m_MethodName: MakeSoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: fe6037f4f0f088643aa5569e6c25e36e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1901615466
@@ -1084,6 +1098,20 @@ MonoBehaviour:
   rectTrs: {fileID: 1901615463}
   button: {fileID: 1901615465}
   hoverTimeToPress: 1
+--- !u!114 &1901615469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1901615462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6f2dfeacb73c14d9b5587d9b54b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: MainMenu
+  sceneDelay: 0
+  btnStuff: {fileID: 1901615465}
 --- !u!1 &2104391234
 GameObject:
   m_ObjectHideFlags: 0

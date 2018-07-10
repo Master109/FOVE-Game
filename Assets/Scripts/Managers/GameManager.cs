@@ -35,8 +35,35 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 		Application.Quit ();
 	}
 	
+	public void LoadSceneAsync (string sceneName)
+	{
+		SceneManager.LoadSceneAsync(sceneName);
+	}
+	
 	public virtual void OnApplicationQuit ()
 	{
 		//PlayerPrefs.DeleteAll();
 	}
+
+    IEnumerator Waiting(string sceneName)
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator Waiting(string sceneName, int time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public virtual void LoadSceneDelay(string sceneName)
+    {
+        StartCoroutine(Waiting(sceneName));
+    }
+
+    public virtual void LoadSceneDelay(string sceneName, int time)
+    {
+        StartCoroutine(Waiting(sceneName, time));
+    }
 }

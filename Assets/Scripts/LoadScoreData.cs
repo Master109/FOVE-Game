@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LoadScoreData : MonoBehaviour {
 
     StreamReader Probe;
-    public string temp;
+    private string temp;
     public ScrollRect SomeScrollRect;
     
 
@@ -38,11 +38,15 @@ public class LoadScoreData : MonoBehaviour {
             DefaultControls.Resources TempResource = new DefaultControls.Resources();
             GameObject NewText = DefaultControls.CreateText(TempResource);
             NewText.AddComponent<LayoutElement>();
-            //NewText.AddComponent<GUIText>();
+            
             
             NewText.transform.SetParent(ContentChild.transform);
             // assign score to text
             NewText.GetComponent<Text>().text = temp;
+            //some formatting
+            NewText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            NewText.GetComponent<Text>().horizontalOverflow = HorizontalWrapMode.Overflow;
+            NewText.GetComponent<Text>().verticalOverflow = VerticalWrapMode.Overflow;
         }
         Probe.Close();
     }
