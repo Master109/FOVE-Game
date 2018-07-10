@@ -66,4 +66,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         StartCoroutine(Waiting(sceneName, time));
     }
+	
+	public virtual void UnloadSceneAsync (string sceneName)
+	{
+		SceneManager.UnloadSceneAsync(sceneName);
+	}
 }
