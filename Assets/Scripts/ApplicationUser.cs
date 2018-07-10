@@ -13,6 +13,8 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 	public Image cursorHoverTimerIndicator;
 	public Plane cursorPlane;
 	public Transform cameraTrs;
+	public Transform mouseCameraTrs;
+	public Transform foveCameraTrs;
 	float cursorDist;
 	Vector3 newCursorPosition;
 	Ray mouseRay;
@@ -24,6 +26,15 @@ public class ApplicationUser : SingletonMonoBehaviour<ApplicationUser>
 			shipPositionOffset = trs.position - PlayerShip.instance.trs.position;
 		cursorPlane = new Plane(cursor.forward, cursor.position);
 		cursorDist = Vector3.Distance(cameraTrs.position, cursor.position);
+		if (useMouse)
+		{
+			foveCameraTrs.gameObject.SetActive(false);
+			cameraTrs = mouseCameraTrs;
+		}
+		else
+		{
+			mouseCameraTrs.gameObject.SetActive(false);
+		}
 	}
 	
 	public virtual void Update ()

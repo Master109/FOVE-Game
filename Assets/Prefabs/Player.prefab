@@ -265,7 +265,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &64199910027720894
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -683,3 +683,5 @@ MonoBehaviour:
   cursor: {fileID: 0}
   cursorHoverTimerIndicator: {fileID: 0}
   cameraTrs: {fileID: 4009267536673914}
+  mouseCameraTrs: {fileID: 4725454500631852}
+  foveCameraTrs: {fileID: 4009267536673914}

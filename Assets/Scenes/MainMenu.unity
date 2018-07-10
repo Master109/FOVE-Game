@@ -301,39 +301,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: isDirty
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: bMat
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: bMat
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1628043745976352, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759635938969140, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114965850762986790, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: useMouse
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114131055112337118, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
-        type: 2}
-      propertyPath: isDirty
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114965850762986790, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
       propertyPath: cursor
@@ -344,6 +311,16 @@ Prefab:
       propertyPath: cursorHoverTimerIndicator
       value: 
       objectReference: {fileID: 656269858}
+    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+        type: 2}
+      propertyPath: bMat
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114751860812849668, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
+        type: 2}
+      propertyPath: isDirty
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1613994855873078, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
       propertyPath: m_IsActive
       value: 0
