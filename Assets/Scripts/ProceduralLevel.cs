@@ -4,8 +4,6 @@ using UnityEngine;
 using ClassExtensions;
 using UnityEngine.UI;
 
-
-
 public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 {
 	public HazardEntry[] hazardEntries;
@@ -43,7 +41,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public override void Start ()
 	{
 		base.Start ();
-		tunnelMat.color = ColorExtensions.RandomColor();
+		tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
 		//This is how you start a coroutine (think of a coroutine as a function that can be run at the same time as other code)
 		StartCoroutine(SpawnHazards ());
 		StartCoroutine(PickNewTunnelColor ());
@@ -60,7 +58,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 			tunnelTrs2 = tunnelTrs1;
 			tunnelTrs1 = _tunnelTrs2;
 		}
-		tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime);
+		tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
 		score += Time.deltaTime;
 		scoreText.text = "" + (int) score + "|" + BestScore;
 	}

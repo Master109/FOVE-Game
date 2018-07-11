@@ -17,8 +17,8 @@ public class LoginBtn : MonoBehaviour {
     {
         User.Select();
         //make button do something when pressed
-        Button btn = logbtn.GetComponent<Button>();
-        btn.onClick.AddListener(Clicking);
+        //Button btn = logbtn.GetComponent<Button>();
+        //btn.onClick.AddListener(Clicking);
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class LoginBtn : MonoBehaviour {
     {
 
     }
-    void Clicking()
+	public void Clicking()
     {
         //define stream
         StreamWriter injection = new StreamWriter("Username.txt");

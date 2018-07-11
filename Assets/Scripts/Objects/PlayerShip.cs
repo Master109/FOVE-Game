@@ -12,7 +12,6 @@ public class PlayerShip : SingletonMonoBehaviour<PlayerShip>
 	public float moveSpeed;
 	float initRotateRate;
 	public float rotateRate;
-	public float turningSensitivity;
 	public float addToMoveSpeed;
 	public float addToRotateRate;
 	

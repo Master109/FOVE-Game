@@ -44,42 +44,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 	{
 		//PlayerPrefs.DeleteAll();
 	}
-
-    IEnumerator Waiting(string sceneName)
-    {
-        yield return new WaitForSeconds(0.9f);
-        SceneManager.LoadScene(sceneName);
-    }
-
-    IEnumerator Waiting(string sceneName, int time)
-    {
-        yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(sceneName);
-    }
-
-    IEnumerator Waiting(string sceneName, float time)
-    {
-        yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public virtual void LoadSceneDelay(string sceneName)
-    {
-        StartCoroutine(Waiting(sceneName));
-    }
-
-    public virtual void LoadSceneDelay(string sceneName, int time)
-    {
-        StartCoroutine(Waiting(sceneName, time));
-    }
 	
 	public virtual void UnloadSceneAsync (string sceneName)
 	{
 		SceneManager.UnloadSceneAsync(sceneName);
 	}
 	
-    public virtual void LoadSceneDelay(string sceneName, float time)
-    {
-        StartCoroutine(Waiting(sceneName, time));
-    }
+	public virtual void SetTimeScale (float timeScale)
+	{
+		Time.timeScale = timeScale;
+	}
 }

@@ -11,6 +11,6 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 		AudioSource soundEffect = Instantiate(soundEffectPrefab);
 		soundEffect.clip = clip;
 		DontDestroyOnLoad(soundEffect.gameObject);
-		Destroy(soundEffect, clip.length);
+		Destroy(soundEffect.gameObject, clip.length);
 	}
 }
