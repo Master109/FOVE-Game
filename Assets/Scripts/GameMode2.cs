@@ -13,20 +13,34 @@ public class GameMode2 : MonoBehaviour {
     private int choice = 0; //determins which rings light up
     private bool FlashingPrimary = false; //determins if first flash is active
     private bool FlashingSecondary = false; //determins if second flash is active
-
+    public GameObject ring1;//set up reference to rings
+    public GameObject ring2;
+    public GameObject ring3;
+    private int target=0;//which ring lights up for player to fly thru
+    Color RingDefault;
+    Color RingLight1;
+    Color RingLight2;
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
+        ring1 = GetComponent<GameObject>().gameObject;//need to reference these to rings in unity editor
+        ring2 = GetComponent<GameObject>().gameObject;
+        ring3 = GetComponent<GameObject>().gameObject;
+        RingDefault = Color.yellow;//assign colors, can change later if needed
+        RingLight1 = Color.red;
+        RingLight2 = Color.cyan;
+        ring1.GetComponent<Renderer>().material.color = RingDefault;//sets rings to default color
+        ring2.GetComponent<Renderer>().material.color = RingDefault;
+        ring3.GetComponent<Renderer>().material.color = RingDefault;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
         RingFlashTiming(); // assumes ~60 frames per second
-        isFlashingPrimary(FlashingPrimary);
-        isFlashingSecondary(FlashingSecondary);
+       //isFlashingPrimary(FlashingPrimary);
+       //isFlashingSecondary(FlashingSecondary);
 	}
 
     public void RingFlashTiming() 
@@ -36,6 +50,7 @@ public class GameMode2 : MonoBehaviour {
             counter = 0; //reset counter
             RingChoice(choice);//randomly choose which rings to light up
             //call ring flash function here
+            
 
             CounterCounter++; //note interval pass
             if(CounterCounter>frequency*10) //slowly increase the length of the interval
@@ -47,6 +62,33 @@ public class GameMode2 : MonoBehaviour {
         {
             counter++;
         }
+       if(counter>=FlashDurationPrimary)
+        {
+            ring1.GetComponent<Renderer>().material.color = RingDefault;
+            ring2.GetComponent<Renderer>().material.color = RingDefault;
+            ring3.GetComponent<Renderer>().material.color = RingDefault;
+        }
+       if(CounterCounter>FlashDurationSecondary)
+        {
+            target = rnd.Next(3);
+            if(target==0)
+            {
+                ring1.GetComponent<Renderer>().material.color = RingLight2;
+            }
+            else if(target==1)
+            {
+                ring2.GetComponent<Renderer>().material.color = RingLight2;
+            }
+            else if(target==2)
+            {
+                ring3.GetComponent<Renderer>().material.color = RingLight2;
+            }
+            else
+            {
+                Application.Quit();
+            }
+        }
+       
     }
     public void Flashing()
     {
@@ -62,7 +104,7 @@ public class GameMode2 : MonoBehaviour {
             CounterCounter = 0;
             
         }
-        if(FlashDurationPrimary<=FlashDurationSecondary)
+        if(FlashDurationPrimary<=FlashDurationSecondary)//ensure second flash is always shorter than initial flash
         {
             FlashDurationSecondary--;
         }
@@ -72,30 +114,42 @@ public class GameMode2 : MonoBehaviour {
         if(i==0)
         {
             //light up left ring
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==1)
         {
             //light up middle ring
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==2)
         {
             //light up right ring
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==3)
         {
             //light up left and middle ring
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==4)
         {
             //light up left and right ring
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==5)
         {
             //light up middle and right ring
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==6)
         {
             //light up left right and middle ring
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
         }
         else if(i==7)
         {
@@ -113,6 +167,28 @@ public class GameMode2 : MonoBehaviour {
     public void isFlashingSecondary(bool b)
     {
 
+    }
+
+    public void getEyePosition()//need to change return type and add return statement
+    {
+        FoveInterface2.instance.GetGazeConvergence_Raw();
+    }
+
+    public void getRingPosition()//need to change return type and add return statement
+    {
+        //add code to get reference to ring that is lighting up
+        if (target == 0)
+        {
+            //ring1.GetComponent<GameObject>().transform;
+        }
+        else if (target == 1)
+        {
+            //ring2.GetComponent<GameObject>().transform;
+        }
+        else if (target == 2)
+        {
+            //ring3.GetComponent<GameObject>().transform;
+        }
     }
 
 }
