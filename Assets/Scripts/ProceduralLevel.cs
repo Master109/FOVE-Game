@@ -101,7 +101,6 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		float difficulty = 0;
 		HazardEntry hazardEntry = null;
 		List<HazardEntry> hazardEntriesRemaining = new List<HazardEntry>();
-		Vector3 spawnPos = new Vector3();
 		while (true)
 		{
 			if (currentDifficulty > currentWaveDifficulty + newWaveRate)
@@ -142,7 +141,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
         //save score to text file
         endGame = GetComponent<EndGameBtn>();
         endGame.SaveScore(score);
-		GameManager.instance.RestartScene ();
+		GameManager.instance.LoadScene ("GameOverMenu");
 	}
 	
 	//Applying the "Serializable" attribute of the "System" namespace makes any 
