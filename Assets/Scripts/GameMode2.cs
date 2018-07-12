@@ -185,20 +185,28 @@ public class GameMode2 : MonoBehaviour {
         FoveInterface2.instance.GetGazeConvergence_Raw();
     }
 
-    public void getRingPosition()//need to change return type and add return statement
+    public Vector3 getRingPosition()//may need to change return type depending of fove output
     {
         //add code to get reference to ring that is lighting up
         if (target == 0)
         {
             Vector3 v = ring1.GetComponent<GameObject>().transform.position;
+            return v;
         }
         else if (target == 1)
         {
             Vector3 v = ring2.GetComponent<GameObject>().transform.position;
+            return v;
         }
         else if (target == 2)
         {
             Vector3 v = ring3.GetComponent<GameObject>().transform.position;
+            return v;
+        }
+        else
+        {
+            Vector3 v = new Vector3(0, 0, 0);
+            return v;
         }
     }
 
