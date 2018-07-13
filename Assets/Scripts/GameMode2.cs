@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 public class GameMode2 : MonoBehaviour {
 
     private int counter=0; //counts thru an interval
@@ -20,6 +21,14 @@ public class GameMode2 : MonoBehaviour {
     Color RingDefault;//color references 
     Color RingLight1;
     Color RingLight2;
+    private float StartFlashTime = 0;
+    private float FlashInterval = 0;
+    private float FlashInterval2 = 0;
+    private readonly float FlashGap = 1.1f;
+    private readonly float FlashDurPrim = 0.8f;
+    private readonly float FlashDurSec = 0.1f;
+    private float FrameRate = 0;
+    private readonly string Path = "Assets/FrameDelay.txt";
 	// Use this for initialization
 	void Start ()
     {
@@ -38,10 +47,12 @@ public class GameMode2 : MonoBehaviour {
 	void Update ()
     {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
-        RingFlashTiming(); // assumes ~60 frames per second
-      
-	}
+        Timing(); // assumes ~60 frames per second
+        OutputFramerate();//determines seconds per frame
 
+
+    }
+    /* //frame timing ver
     public void RingFlashTiming() 
     {
        if(counter>=frequency)//determines what happens at end of interval
@@ -112,6 +123,7 @@ public class GameMode2 : MonoBehaviour {
             FlashDurationSecondary--;
         }
     }
+    */
     public void RingChoice(int i)
     {
         if(i==0)
@@ -209,5 +221,88 @@ public class GameMode2 : MonoBehaviour {
             return v;
         }
     }
+    //seconds timing ver
+    public void Timing()
+    {
+        StartFlashTime += Time.deltaTime;
+        if(StartFlashTime>FlashGap)
+        {
+            if (!FlashingPrimary)//flash if not already flashing
+            {
+                RingChoice(choice);
+            }
+            FlashInterval += Time.deltaTime;
+        }
+        
+        if (FlashInterval > FlashDurPrim)//reset rings after flashing
+        {
+            ResetRings();
+        }
+        if(StartFlashTime>FlashGap+FlashDurPrim)//second flash
+        {
+            if (!FlashingSecondary)// flash if not flashing
+            {
+                PickTrget();
+            }
+            FlashInterval2 += Time.deltaTime;
+        }
+        if(FlashInterval2>FlashDurSec)//reset rings after second flash
+        {
+            ResetRings();
+        }
+        if(StartFlashTime>FlashGap+FlashDurPrim+FlashDurSec)//reset timers for next set of rings
+        {
+            StartFlashTime = 0;
+            FlashInterval = 0;
+            FlashInterval2 = 0;
+            GameManager.instance.RestartScene();
+        }
 
+
+    }
+
+    public void ResetRings()//resets ring values to default state
+    {
+        ring1.GetComponent<Renderer>().material.color = RingDefault;
+        ring2.GetComponent<Renderer>().material.color = RingDefault;
+        ring3.GetComponent<Renderer>().material.color = RingDefault;
+        FlashingPrimary = false;
+        FlashingSecondary = false;
+    }
+
+    public void PickTrget()//choose which ring player needs to fly thru
+    {
+        target = rnd.Next(3);
+        if (target == 0)
+        {
+            ring1.GetComponent<Renderer>().material.color = RingLight2;
+            FlashingSecondary = true;
+        }
+        else if (target == 1)
+        {
+            ring2.GetComponent<Renderer>().material.color = RingLight2;
+            FlashingSecondary = true;
+        }
+        else if (target == 2)
+        {
+            ring3.GetComponent<Renderer>().material.color = RingLight2;
+            FlashingSecondary = true;
+        }
+        else
+        {
+            Application.Quit();
+        }
+    }
+
+    public void CompareAttention()
+    {
+        //add code here to compare the eye position against the ring position
+    }
+    public void OutputFramerate()
+    {
+        FrameRate = Time.deltaTime;
+        string temp = "seconds per frame: " + FrameRate.ToString();
+        File.AppendAllText(Path, temp);
+
+    }
 }
