@@ -6,14 +6,14 @@ using System.IO;
 public class GameMode2 : MonoBehaviour {
 
     private int counter=0; //counts thru an interval
-    private int frequency = 10; //determins length of interval
+    private int frequency = 10; //determines length of interval
     private int CounterCounter = 0; //counts intervals
-    private int FlashDurationPrimary = 40; //determins initial flash duration of rings
-    private int FlashDurationSecondary = 10; //determins flash duration of second flash on ring
+    private int FlashDurationPrimary = 40; //determines initial flash duration of rings
+    private int FlashDurationSecondary = 10; //determines flash duration of second flash on ring
     private System.Random rnd = new System.Random(); //random number generator for picking rings
-    private int choice = 0; //determins which rings light up
-    private bool FlashingPrimary = false; //determins if first flash is active
-    private bool FlashingSecondary = false; //determins if second flash is active
+    private int choice = 0; //determines which rings light up
+    private bool FlashingPrimary = false; //determines if first flash is active
+    private bool FlashingSecondary = false; //determines if second flash is active
     public GameObject ring1;//set up reference to rings
     public GameObject ring2;
     public GameObject ring3;
