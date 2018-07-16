@@ -184,8 +184,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	
 	public virtual void LoseLevel ()
 	{
-		if ((int) Time.timeSinceLevelLoad > BestScore)
-			BestScore = (int) Time.timeSinceLevelLoad;
+		if ((int) score > BestScore)
+			BestScore = (int) score;
         //save score to text file
         //endGame = GetComponent<EndGameBtn>();
         //endGame.SaveScore(score);
