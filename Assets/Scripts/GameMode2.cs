@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using ClassExtensions;
+
 public class GameMode2 : MonoBehaviour {
 
     private int counter=0; //counts thru an interval
@@ -29,8 +31,18 @@ public class GameMode2 : MonoBehaviour {
     private readonly float FlashDurSec = 0.1f;
     private float FrameRate = 0;
     private readonly string Path = "Assets/FrameDelay.txt";
-	// Use this for initialization
-	void Start ()
+    //copying some of gilly's code for stage generation
+    public Transform tunnelTrs1;
+    public Transform tunnelTrs2;
+    public Collider tunnelCollider;
+    public float minZSpawnDist;
+    public Material tunnelMat;
+    Color nextTunnelColor;
+    public float pickNewColorRate;
+    public float colorLerpRate;
+
+    // Use this for initialization
+    void Start ()
     {
         ring1 = GetComponent<GameObject>().gameObject;//need to reference these to rings in unity editor
         ring2 = GetComponent<GameObject>().gameObject;
@@ -41,6 +53,9 @@ public class GameMode2 : MonoBehaviour {
         ring1.GetComponent<Renderer>().material.color = RingDefault;//sets rings to default color
         ring2.GetComponent<Renderer>().material.color = RingDefault;
         ring3.GetComponent<Renderer>().material.color = RingDefault;
+
+        //copy of gillys code for tunnel
+        tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
     }
 	
 	// Update is called once per frame
@@ -49,6 +64,16 @@ public class GameMode2 : MonoBehaviour {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
         Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
+
+        //copy of gilly's code for tunnel
+        if (PlayerShip.instance.trs.position.z > tunnelTrs2.position.z)
+        {
+            tunnelTrs1.position += Vector3.forward * (tunnelTrs2.position.z - tunnelTrs1.position.z) * 2;
+            Transform _tunnelTrs2 = tunnelTrs2;
+            tunnelTrs2 = tunnelTrs1;
+            tunnelTrs1 = _tunnelTrs2;
+        }
+        tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
 
 
     }
@@ -178,7 +203,7 @@ public class GameMode2 : MonoBehaviour {
             //light up no rings
             FlashingPrimary = false;
         }
-        else
+        else//should never reach this else, if it does, something is wrong
         {
             Application.Quit();
         }
@@ -195,6 +220,7 @@ public class GameMode2 : MonoBehaviour {
     public void getEyePosition()//need to change return type and add return statement
     {
         FoveInterface2.instance.GetGazeConvergence_Raw();
+        //Vector3 v = (Vector3)FoveInterface2.instance.GetGazeConvergence_Raw();
     }
 
     public Vector3 getRingPosition()//may need to change return type depending of fove output
@@ -242,7 +268,7 @@ public class GameMode2 : MonoBehaviour {
         {
             if (!FlashingSecondary)// flash if not flashing
             {
-                PickTrget();
+                PickTarget();
             }
             FlashInterval2 += Time.deltaTime;
         }
@@ -255,7 +281,7 @@ public class GameMode2 : MonoBehaviour {
             StartFlashTime = 0;
             FlashInterval = 0;
             FlashInterval2 = 0;
-            GameManager.instance.RestartScene();
+            GameManager.instance.RestartScene();//need to replace this with code to move rings infront of player
         }
 
 
@@ -270,7 +296,7 @@ public class GameMode2 : MonoBehaviour {
         FlashingSecondary = false;
     }
 
-    public void PickTrget()//choose which ring player needs to fly thru
+    public void PickTarget()//choose which ring player needs to fly thru
     {
         target = rnd.Next(3);
         if (target == 0)
@@ -288,7 +314,7 @@ public class GameMode2 : MonoBehaviour {
             ring3.GetComponent<Renderer>().material.color = RingLight2;
             FlashingSecondary = true;
         }
-        else
+        else//should never reach this else, if it does, something is wrong
         {
             Application.Quit();
         }
