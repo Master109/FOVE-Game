@@ -1,21 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 using System;
+using UnityEngine.Networking;
 
-public class AnalyticsManager : AnalyticsEventTracker
+public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 {
 	public Transform trs;
-	public static AnalyticsManager instance;
-	public string serverName;
-	public string serverUsername;
-	public string serverPassword;
-	public string databaseName;
-	public WWWForm form;
+	public string formUrl;
+	public string name;
+	public string nameFieldNameInForm;
+	public string email;
+	public string emailFieldNameInForm;
+	public string phone;
+	public string phoneFieldNameInForm;
+	public string keyFieldNameInForm;
+	public string valueFieldNameInForm;
+	UnityWebRequest webRequest;
+	WWWForm form;
 	
-	public void Start ()
+	public override void Start ()
 	{
+		base.Start ();
 		trs.SetParent(null);
 		DontDestroyOnLoad(gameObject);
 		if (instance != null && instance != this)
@@ -29,22 +35,9 @@ public class AnalyticsManager : AnalyticsEventTracker
 	public void Connect ()
 	{
 		form = new WWWForm();
-		form.AddField("serverName", serverName);
-		form.AddField("serverUsername", serverUsername);
-		form.AddField("serverPassword", serverPassword);
-		form.AddField("databaseName", databaseName);
-	}
-	
-	public static void LogEvent (CustomAnalyticsEvent customEvent)
-	{
-		AnalyticsEvent.Custom(customEvent.GetName(), customEvent.GetData());
-	}
-	
-	public AnalyticsManager GetInstance ()
-	{
-		if (instance == null)
-			instance = FindObjectOfType<AnalyticsManager>();
-		return instance;
+		form.AddField(nameFieldNameInForm, name);
+		form.AddField(emailFieldNameInForm, email);
+		form.AddField(phoneFieldNameInForm, phone);
 	}
 	
 	public class CustomAnalyticsEvent
@@ -65,52 +58,86 @@ public class AnalyticsManager : AnalyticsEventTracker
 	
 	public class PlayerDeathEvent : CustomAnalyticsEvent
 	{
-		public AnalyticsDataEntry<TimeSpan> totalGameDuration;
-		public AnalyticsDataEntry<TimeSpan> sessionDuration;
+		//public AnalyticsDataEntry<TimeSpan> totalGameDuration;
+		//public AnalyticsDataEntry<TimeSpan> sessionDuration;
 		public AnalyticsDataEntry<int> score;
 		
 		public override Dictionary<string, object> GetData ()
 		{
 			Dictionary<string, object> output = new Dictionary<string, object>();
-			totalGameDuration.name = "Total Gameplay Duration";
-			output.Add(totalGameDuration.name, totalGameDuration.value);
-			sessionDuration.name = "Session Duration";
-			output.Add(sessionDuration.name, sessionDuration.value);
+			//totalGameDuration.name = "Total Gameplay Duration";
+			//output.Add(totalGameDuration.name, totalGameDuration.value);
+			//sessionDuration.name = "Session Duration";
+			//output.Add(sessionDuration.name, sessionDuration.value);
 			score.name = "Score";
 			output.Add(score.name, score.value);
 			return output;
 		}
 	}
 	
-	public class LookAtObject : CustomAnalyticsEvent
+	public class LookAtObjectEvent : CustomAnalyticsEvent
 	{
-		public AnalyticsDataEntry<ISpawnable> obj;
-		public AnalyticsDataEntry<float> time;
+		public AnalyticsDataEntry<IRegisterAttention> obj = new AnalyticsDataEntry<IRegisterAttention>();
+		public AnalyticsDataEntry<float> distance = new AnalyticsDataEntry<float>();
+		public AnalyticsDataEntry<float> time = new AnalyticsDataEntry<float>();
 		
 		public override Dictionary<string, object> GetData ()
 		{
 			Dictionary<string, object> output = new Dictionary<string, object>();
 			obj.name = "Looked At";
 			output.Add(obj.name, obj.value);
+			distance.name = "Distance";
+			output.Add(distance.name, distance.value);
 			time.name = "At Time";
 			output.Add(time.name, time.value);
 			return output;
 		}
 	}
 	
-	public class LookAwayFromObject : CustomAnalyticsEvent
+	public class LookAwayFromObjectEvent : CustomAnalyticsEvent
 	{
-		public AnalyticsDataEntry<ISpawnable> obj;
-		public AnalyticsDataEntry<float> duration;
+		public AnalyticsDataEntry<IRegisterAttention> obj = new AnalyticsDataEntry<IRegisterAttention>();
+		public AnalyticsDataEntry<float> distance = new AnalyticsDataEntry<float>();
+		public AnalyticsDataEntry<float> duration = new AnalyticsDataEntry<float>();
 		
 		public override Dictionary<string, object> GetData ()
 		{
 			Dictionary<string, object> output = new Dictionary<string, object>();
 			obj.name = "Looked Away From";
 			output.Add(obj.name, obj.value);
+			distance.name = "Distance";
+			output.Add(distance.name, distance.value);
 			duration.name = "Look Duration";
 			output.Add(duration.name, duration.value);
 			return output;
+		}
+	}
+	
+	public void LogEvent (CustomAnalyticsEvent customEvent)
+	{
+		StartCoroutine(LogEventRoutine (customEvent));
+	}
+	
+	IEnumerator LogEventRoutine (CustomAnalyticsEvent customEvent)
+	{
+		foreach (KeyValuePair<string, object> data in customEvent.GetData())
+		{
+			Connect ();
+			form.AddField(keyFieldNameInForm, data.Key);
+			form.AddField(valueFieldNameInForm, data.Value.ToString());
+			using (webRequest = UnityWebRequest.Post(formUrl, form))
+			{
+				yield return webRequest.SendWebRequest();
+				if (webRequest.isNetworkError || webRequest.isHttpError)
+				{
+					Debug.Log(webRequest.error);
+				}
+				else
+				{
+					Debug.Log("Form upload complete!");
+				}
+			}
+			webRequest.Dispose();
 		}
 	}
 	

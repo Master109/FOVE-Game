@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Powerup : MonoBehaviour, ISpawnable
+public class Powerup : MonoBehaviour, ISpawnable, IRegisterAttention
 {
 	public Transform trs;
+	public Transform Trs
+	{
+		get
+		{
+			return trs;
+		}
+	}
 	public int prefabIndex;
 	public int PrefabIndex
 	{

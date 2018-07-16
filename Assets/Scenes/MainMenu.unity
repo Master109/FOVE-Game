@@ -155,29 +155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20536c5229afc5040b351b22a712f027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Trigger:
-    m_IsTriggerExpanded: 1
-    m_Type: 0
-    m_LifecycleEvent: 0
-    m_ApplyRules: 0
-    m_Rules:
-      m_Rules: []
-    m_TriggerBool: 0
-    m_InitTime: 5
-    m_RepeatTime: 5
-    m_Repetitions: 0
-    repetitionCount: 0
-  m_EventPayload:
-    m_IsEventExpanded: 0
-    m_StandardEventType: CustomEvent
-    m_Parameters:
-      m_Parameters: []
-    m_Name: 
   trs: {fileID: 27123195}
-  serverName: 
-  serverUsername: id3203584_gilead_cosman
-  serverPassword: hellobob5
-  databaseName: id3203584_pong_database
+  formUrl: https://docs.google.com/forms/d/e/1FAIpQLSeLlprzN5JpdeMWS_a6hBJAV1DEC6UBoJWbxWBAbDxJoAES6A/formResponse
+  name: Gilead Cosman
+  nameFieldNameInForm: entry.1145409070
+  email: gileadcosman@gmail.com
+  emailFieldNameInForm: entry.1428631089
+  phone: (858)766-1202
+  phoneFieldNameInForm: entry.1550088312
+  keyFieldNameInForm: entry.1238554654
+  valueFieldNameInForm: entry.1304869363
 --- !u!1 &40297645
 GameObject:
   m_ObjectHideFlags: 0
