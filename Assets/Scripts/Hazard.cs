@@ -39,6 +39,9 @@ public class Hazard : MonoBehaviour, ISpawnable
 	{
 		if (coll.collider != PlayerShip.instance.collider)
 			return;
+		AnalyticsManager.MovedIntoEvent movedIntoEvent = new AnalyticsManager.MovedIntoEvent();
+		movedIntoEvent.objName.value = name;
+		AnalyticsManager.instance.LogEvent(movedIntoEvent);
 		ProceduralLevel.instance.LoseLevel ();
 	}
 }

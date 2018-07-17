@@ -141,8 +141,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 701275881}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &27123196
 MonoBehaviour:
@@ -157,14 +157,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 27123195}
   formUrl: https://docs.google.com/forms/d/e/1FAIpQLSeLlprzN5JpdeMWS_a6hBJAV1DEC6UBoJWbxWBAbDxJoAES6A/formResponse
-  name: Gilead Cosman
-  nameFieldNameInForm: entry.1145409070
-  email: gileadcosman@gmail.com
-  emailFieldNameInForm: entry.1428631089
-  phone: (858)766-1202
-  phoneFieldNameInForm: entry.1550088312
-  keyFieldNameInForm: entry.1238554654
-  valueFieldNameInForm: entry.1304869363
+  _CustomAnalyticsEvent:
+    name:
+      fieldNameInForm: entry.1145409070
+      value: Gilead Cosman
+    email:
+      fieldNameInForm: entry.1428631089
+      value: gileadcosman@gmail.com
+    phone:
+      fieldNameInForm: entry.1550088312
+      value: (858)766-1202
+  _LookAtObjectEvent:
+    name:
+      fieldNameInForm: 
+      value: 
+    email:
+      fieldNameInForm: 
+      value: 
+    phone:
+      fieldNameInForm: 
+      value: 
+    objName:
+      fieldNameInForm: entry.1238554654
+      value: 
+    distance:
+      fieldNameInForm: entry.1595239599
+      value: 
+  _LookAwayFromObjectEvent:
+    name:
+      fieldNameInForm: 
+      value: 
+    email:
+      fieldNameInForm: 
+      value: 
+    phone:
+      fieldNameInForm: 
+      value: 
+    objName:
+      fieldNameInForm: entry.1460896697
+      value: 
+    distance:
+      fieldNameInForm: entry.1595239599
+      value: 
+  _PlayerDeathEvent:
+    name:
+      fieldNameInForm: 
+      value: 
+    email:
+      fieldNameInForm: 
+      value: 
+    phone:
+      fieldNameInForm: 
+      value: 
+    score:
+      fieldNameInForm: entry.1785039152
+      value: 
+  _MovedIntoEvent:
+    name:
+      fieldNameInForm: 
+      value: 
+    email:
+      fieldNameInForm: 
+      value: 
+    phone:
+      fieldNameInForm: 
+      value: 
+    objName:
+      fieldNameInForm: entry.1304869363
+      value: 
 --- !u!1 &40297645
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +386,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &560105895
 Prefab:
@@ -365,7 +425,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4671932422542494, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114965850762986790, guid: 4a6a5af39e3d62145b31c4e2c3c3a9f8,
         type: 2}
@@ -575,16 +635,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4626149290484904, guid: d342c86fded13054b98aed09e5a4d29e, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d342c86fded13054b98aed09e5a4d29e, type: 2}
   m_IsPrefabAsset: 0
---- !u!4 &701275881 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4626149290484904, guid: d342c86fded13054b98aed09e5a4d29e,
-    type: 2}
-  m_PrefabInternal: {fileID: 701275880}
 --- !u!1 &729000062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2074,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613894121
 GameObject:
