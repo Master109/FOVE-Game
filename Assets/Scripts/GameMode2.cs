@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using ClassExtensions;
+using Fove;
 
 public class GameMode2 : MonoBehaviour {
 
@@ -241,7 +242,7 @@ public class GameMode2 : MonoBehaviour {
             Vector3 v = ring3.GetComponent<GameObject>().transform.position;
             return v;
         }
-        else
+        else//should never reach this else, if it does, something is wrong
         {
             Vector3 v = new Vector3(0, 0, 0);
             return v;
@@ -251,7 +252,7 @@ public class GameMode2 : MonoBehaviour {
     public void Timing()
     {
         StartFlashTime += Time.deltaTime;
-        if(StartFlashTime>FlashGap)
+        if(StartFlashTime>FlashGap && StartFlashTime<FlashGap+FlashDurPrim)
         {
             if (!FlashingPrimary)//flash if not already flashing
             {
@@ -327,8 +328,16 @@ public class GameMode2 : MonoBehaviour {
     public void OutputFramerate()
     {
         FrameRate = Time.deltaTime;
-        string temp = "seconds per frame: " + FrameRate.ToString();
+        string temp = "seconds per frame: " + FrameRate.ToString() + Environment.NewLine;
         File.AppendAllText(Path, temp);
 
     }
+    
+    /*
+    public void Test()
+    {
+        FoveInterface2.instance.GetGazeConvergence();
+        FoveUnityUtils.GetUnityVector(FoveInterface2.instance.GazeConvergenceData);
+    }
+    */
 }
