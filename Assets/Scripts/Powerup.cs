@@ -37,6 +37,9 @@ public class Powerup : MonoBehaviour, ISpawnable, IRegisterAttention
 	//A function override must have with the same signature (the parts of the function that are not its contents) as the function it is overriding. For example: To override "public virtual void OnTriggerEnter (Collider other)" in a different class that inherits from this one, you must write "public ovveride void OnTriggerEnter (Collider other)"
 	public virtual void OnTriggerEnter (Collider other)
 	{
+		AnalyticsManager.MovedIntoEvent movedIntoEvent = new AnalyticsManager.MovedIntoEvent();
+		movedIntoEvent.objName.value = name;
+		AnalyticsManager.instance.LogEvent(movedIntoEvent);
 		Obtain ();
 		Destroy(gameObject);
 	}

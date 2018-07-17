@@ -79,7 +79,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 			}
 			else
 			{
-				if (previouslyLookedAt != null && previouslyLookedAt.obj.value != obj)
+				if (previouslyLookedAt != null && previouslyLookedAt.obj != obj)
 					AddLookAwayFromEvent ();
 				else if (previouslyLookedAt == null)
 					AddLookAtEvent (obj);
@@ -95,18 +95,17 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public virtual void AddLookAtEvent (IRegisterAttention obj)
 	{
 		previouslyLookedAt = new AnalyticsManager.LookAtObjectEvent();
-		previouslyLookedAt.obj.value = obj;
-		previouslyLookedAt.distance.value = Vector3.Distance(obj.Trs.position, ApplicationUser.instance.cameraTrs.position);
-		previouslyLookedAt.time.value =  Time.timeSinceLevelLoad;
+		previouslyLookedAt.obj = obj;
+		previouslyLookedAt.objName.value = obj.Trs.name;
+		previouslyLookedAt.distance.value = "" + Vector3.Distance(obj.Trs.position, ApplicationUser.instance.cameraTrs.position);
 		AnalyticsManager.instance.LogEvent (previouslyLookedAt);
 	}
 	
 	public virtual void AddLookAwayFromEvent ()
 	{
 		AnalyticsManager.LookAwayFromObjectEvent lookAwayEvent = new AnalyticsManager.LookAwayFromObjectEvent();
-		lookAwayEvent.obj.value = previouslyLookedAt.obj.value;
-		lookAwayEvent.distance.value = Vector3.Distance(previouslyLookedAt.obj.value.Trs.position, ApplicationUser.instance.cameraTrs.position);
-		lookAwayEvent.duration.value = Time.timeSinceLevelLoad - previouslyLookedAt.time.value;
+		lookAwayEvent.objName.value = previouslyLookedAt.obj.Trs.name;
+		lookAwayEvent.distance.value = "" + Vector3.Distance(previouslyLookedAt.obj.Trs.position, ApplicationUser.instance.cameraTrs.position);
 		previouslyLookedAt = null;
 		AnalyticsManager.instance.LogEvent (lookAwayEvent);
 	}
@@ -190,7 +189,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
         //endGame = GetComponent<EndGameBtn>();
         //endGame.SaveScore(score);
 		AnalyticsManager.PlayerDeathEvent deathEvent = new AnalyticsManager.PlayerDeathEvent();
-		deathEvent.score.value = (int) score;
+		deathEvent.score.value = "" + (int) score;
 		AnalyticsManager.instance.LogEvent(deathEvent);
 		GameManager.instance.LoadScene ("GameOverMenu");
 	}

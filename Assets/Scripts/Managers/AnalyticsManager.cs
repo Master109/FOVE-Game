@@ -3,45 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
+using System.Reflection;
 
+[ExecuteInEditMode]
 public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 {
 	public Transform trs;
 	public string formUrl;
-	public string name;
-	public string nameFieldNameInForm;
-	public string email;
-	public string emailFieldNameInForm;
-	public string phone;
-	public string phoneFieldNameInForm;
-	public string keyFieldNameInForm;
-	public string valueFieldNameInForm;
 	UnityWebRequest webRequest;
-	WWWForm form;
+	[HideInInspector]
+	public WWWForm form;
+	public CustomAnalyticsEvent _CustomAnalyticsEvent;
+	public LookAtObjectEvent _LookAtObjectEvent;
+	public LookAwayFromObjectEvent _LookAwayFromObjectEvent;
+	public PlayerDeathEvent _PlayerDeathEvent;
+	public MovedIntoEvent _MovedIntoEvent;
 	
 	public override void Start ()
 	{
-		base.Start ();
-		trs.SetParent(null);
-		DontDestroyOnLoad(gameObject);
-		if (instance != null && instance != this)
+		if (Application.isPlaying)
 		{
-			Destroy(gameObject);
-			return;
+			trs.SetParent(null);
+			DontDestroyOnLoad(gameObject);
+			if (instance != null && instance != this)
+			{
+				Destroy(gameObject);
+				return;
+			}
 		}
-		instance = this;
+		base.Start ();
 	}
 	
-	public void Connect ()
-	{
-		form = new WWWForm();
-		form.AddField(nameFieldNameInForm, name);
-		form.AddField(emailFieldNameInForm, email);
-		form.AddField(phoneFieldNameInForm, phone);
-	}
-	
+	[System.Serializable]
 	public class CustomAnalyticsEvent
 	{
+		public AnalyticsDataEntry name = new AnalyticsDataEntry();
+		public AnalyticsDataEntry email = new AnalyticsDataEntry();
+		public AnalyticsDataEntry phone = new AnalyticsDataEntry();
+		
+		public CustomAnalyticsEvent ()
+		{
+			Init ();
+		}
+		
+		public virtual void Init ()
+		{
+			CustomAnalyticsEvent customEvent = (CustomAnalyticsEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			name.fieldNameInForm = customEvent.name.fieldNameInForm;
+			name.value = customEvent.name.value;
+			email.fieldNameInForm = customEvent.email.fieldNameInForm;
+			email.value = customEvent.email.value;
+			phone.fieldNameInForm = customEvent.phone.fieldNameInForm;
+			phone.value = customEvent.phone.value;
+		}
+		
 		public virtual string GetName ()
 		{
 			string output = GetType().ToString();
@@ -49,67 +64,115 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 			return output;
 		}
 		
-		public virtual Dictionary<string, object> GetData ()
+		public virtual void LogData ()
 		{
-			Dictionary<string, object> output = new Dictionary<string, object>();
-			return output;
+			AnalyticsManager.instance.form = new WWWForm();
+			AnalyticsManager.instance.form.AddField(name.fieldNameInForm, name.value);
+			AnalyticsManager.instance.form.AddField(email.fieldNameInForm, email.value);
+			AnalyticsManager.instance.form.AddField(phone.fieldNameInForm, phone.value);
 		}
 	}
 	
+	[System.Serializable]
 	public class PlayerDeathEvent : CustomAnalyticsEvent
 	{
-		//public AnalyticsDataEntry<TimeSpan> totalGameDuration;
-		//public AnalyticsDataEntry<TimeSpan> sessionDuration;
-		public AnalyticsDataEntry<int> score;
+		public AnalyticsDataEntry score = new AnalyticsDataEntry();
 		
-		public override Dictionary<string, object> GetData ()
+		public PlayerDeathEvent ()
 		{
-			Dictionary<string, object> output = new Dictionary<string, object>();
-			//totalGameDuration.name = "Total Gameplay Duration";
-			//output.Add(totalGameDuration.name, totalGameDuration.value);
-			//sessionDuration.name = "Session Duration";
-			//output.Add(sessionDuration.name, sessionDuration.value);
-			score.name = "Score";
-			output.Add(score.name, score.value);
-			return output;
+			Init ();
+		}
+		
+		public override void Init ()
+		{
+			base.Init ();
+			PlayerDeathEvent customEvent = (PlayerDeathEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			score.fieldNameInForm = customEvent.score.fieldNameInForm;
+		}
+		
+		public override void LogData ()
+		{
+			base.LogData ();
+			AnalyticsManager.instance.form.AddField(score.fieldNameInForm, score.value);
 		}
 	}
 	
+	[System.Serializable]
 	public class LookAtObjectEvent : CustomAnalyticsEvent
 	{
-		public AnalyticsDataEntry<IRegisterAttention> obj = new AnalyticsDataEntry<IRegisterAttention>();
-		public AnalyticsDataEntry<float> distance = new AnalyticsDataEntry<float>();
-		public AnalyticsDataEntry<float> time = new AnalyticsDataEntry<float>();
+		public IRegisterAttention obj;
+		public AnalyticsDataEntry objName = new AnalyticsDataEntry();
+		public AnalyticsDataEntry distance = new AnalyticsDataEntry();
 		
-		public override Dictionary<string, object> GetData ()
+		public LookAtObjectEvent ()
 		{
-			Dictionary<string, object> output = new Dictionary<string, object>();
-			obj.name = "Looked At";
-			output.Add(obj.name, obj.value);
-			distance.name = "Distance";
-			output.Add(distance.name, distance.value);
-			time.name = "At Time";
-			output.Add(time.name, time.value);
-			return output;
+			Init ();
+		}
+		
+		public override void Init ()
+		{
+			base.Init ();
+			LookAtObjectEvent customEvent = (LookAtObjectEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			objName.fieldNameInForm = customEvent.objName.fieldNameInForm;
+			distance.fieldNameInForm = customEvent.distance.fieldNameInForm;
+		}
+		
+		public override void LogData ()
+		{
+			base.LogData ();
+			AnalyticsManager.instance.form.AddField(objName.fieldNameInForm, objName.value);
+			AnalyticsManager.instance.form.AddField(distance.fieldNameInForm, distance.value);
 		}
 	}
 	
+	[System.Serializable]
 	public class LookAwayFromObjectEvent : CustomAnalyticsEvent
 	{
-		public AnalyticsDataEntry<IRegisterAttention> obj = new AnalyticsDataEntry<IRegisterAttention>();
-		public AnalyticsDataEntry<float> distance = new AnalyticsDataEntry<float>();
-		public AnalyticsDataEntry<float> duration = new AnalyticsDataEntry<float>();
+		public AnalyticsDataEntry objName = new AnalyticsDataEntry();
+		public AnalyticsDataEntry distance = new AnalyticsDataEntry();
 		
-		public override Dictionary<string, object> GetData ()
+		public LookAwayFromObjectEvent ()
 		{
-			Dictionary<string, object> output = new Dictionary<string, object>();
-			obj.name = "Looked Away From";
-			output.Add(obj.name, obj.value);
-			distance.name = "Distance";
-			output.Add(distance.name, distance.value);
-			duration.name = "Look Duration";
-			output.Add(duration.name, duration.value);
-			return output;
+			Init ();
+		}
+		
+		public override void Init ()
+		{
+			base.Init ();
+			LookAwayFromObjectEvent customEvent = (LookAwayFromObjectEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			objName.fieldNameInForm = customEvent.objName.fieldNameInForm;
+			distance.fieldNameInForm = customEvent.distance.fieldNameInForm;
+		}
+		
+		public override void LogData ()
+		{
+			base.LogData ();
+			AnalyticsManager.instance.form.AddField(objName.fieldNameInForm, objName.value);
+			AnalyticsManager.instance.form.AddField(distance.fieldNameInForm, distance.value);
+		}
+	}
+	
+	[System.Serializable]
+	public class MovedIntoEvent : CustomAnalyticsEvent
+	{
+		public AnalyticsDataEntry objName = new AnalyticsDataEntry();
+		
+		public MovedIntoEvent ()
+		{
+			Init ();
+		}
+		
+		public override void Init ()
+		{
+			base.Init ();
+			MovedIntoEvent customEvent = (MovedIntoEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			objName.fieldNameInForm = customEvent.objName.fieldNameInForm;
+		}
+		
+		public override void LogData ()
+		{
+			base.LogData ();
+			AnalyticsManager.instance.form.AddField(objName.fieldNameInForm, objName.value);
 		}
 	}
 	
@@ -120,30 +183,31 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 	
 	IEnumerator LogEventRoutine (CustomAnalyticsEvent customEvent)
 	{
-		foreach (KeyValuePair<string, object> data in customEvent.GetData())
+		customEvent.LogData ();
+		using (webRequest = UnityWebRequest.Post(formUrl, form))
 		{
-			Connect ();
-			form.AddField(keyFieldNameInForm, data.Key);
-			form.AddField(valueFieldNameInForm, data.Value.ToString());
-			using (webRequest = UnityWebRequest.Post(formUrl, form))
+			yield return webRequest.SendWebRequest();
+			if (webRequest.isNetworkError || webRequest.isHttpError)
 			{
-				yield return webRequest.SendWebRequest();
-				if (webRequest.isNetworkError || webRequest.isHttpError)
-				{
-					Debug.Log(webRequest.error);
-				}
-				else
-				{
-					Debug.Log("Form upload complete!");
-				}
+				Debug.Log(webRequest.error);
 			}
-			webRequest.Dispose();
+			else
+			{
+				Debug.Log("Form upload complete!");
+			}
 		}
+		webRequest.Dispose();
 	}
 	
-	public struct AnalyticsDataEntry<T>
+	public class AnalyticsDataEntry<T> : AnalyticsDataEntry
 	{
-		public string name;
-		public T value;
+	}
+	
+	[System.Serializable]
+	public class AnalyticsDataEntry
+	{
+		public string fieldNameInForm;
+		//[HideInInspector]
+		public string value = "";
 	}
 }
