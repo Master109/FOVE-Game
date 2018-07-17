@@ -24,14 +24,14 @@ public class GameMode2 : MonoBehaviour {
     Color RingDefault;//color references 
     Color RingLight1;
     Color RingLight2;
-    private float StartFlashTime = 0;
-    private float FlashInterval = 0;
-    private float FlashInterval2 = 0;
-    private readonly float FlashGap = 1.1f;
-    private readonly float FlashDurPrim = 0.8f;
-    private readonly float FlashDurSec = 0.1f;
-    private float FrameRate = 0;
-    private readonly string Path = "Assets/FrameDelay.txt";
+    private float StartFlashTime = 0;//timer for current itereation
+    private float FlashInterval = 0;//timmer to compare first flash duration
+    private float FlashInterval2 = 0;//timer to compare second flash duration
+    private readonly float FlashGap = 1.1f; //time gap before first flash
+    private readonly float FlashDurPrim = 0.8f;//duration of first flash
+    private readonly float FlashDurSec = 0.1f;//duration of second flash
+    private float FrameRate = 0;//output for delay between frames
+    private readonly string Path = "Assets/FrameDelay.txt";//path for file to save frame delay in
     //copying some of gilly's code for stage generation
     public Transform tunnelTrs1;
     public Transform tunnelTrs2;
@@ -65,16 +65,8 @@ public class GameMode2 : MonoBehaviour {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
         Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
+        TunnelUpdate();//call gilly's code to extend/repeat the tunnel
 
-        //copy of gilly's code for tunnel
-        if (PlayerShip.instance.trs.position.z > tunnelTrs2.position.z)
-        {
-            tunnelTrs1.position += Vector3.forward * (tunnelTrs2.position.z - tunnelTrs1.position.z) * 2;
-            Transform _tunnelTrs2 = tunnelTrs2;
-            tunnelTrs2 = tunnelTrs1;
-            tunnelTrs1 = _tunnelTrs2;
-        }
-        tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
 
 
     }
@@ -333,6 +325,20 @@ public class GameMode2 : MonoBehaviour {
 
     }
     
+    public void TunnelUpdate()
+    {
+        //copy of gilly's code for tunnel
+        if (PlayerShip.instance.trs.position.z > tunnelTrs2.position.z)
+        {
+            tunnelTrs1.position += Vector3.forward * (tunnelTrs2.position.z - tunnelTrs1.position.z) * 2;
+            Transform _tunnelTrs2 = tunnelTrs2;
+            tunnelTrs2 = tunnelTrs1;
+            tunnelTrs1 = _tunnelTrs2;
+        }
+        tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
+
+    }
+
     /*
     public void Test()
     {
