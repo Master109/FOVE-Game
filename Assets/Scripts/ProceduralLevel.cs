@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ClassExtensions;
 using UnityEngine.UI;
+using System.IO;
 
 public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 {
@@ -188,15 +189,18 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
         //save score to text file
         //endGame = GetComponent<EndGameBtn>();
         //endGame.SaveScore(score);
-		AnalyticsManager.PlayerDeathEvent deathEvent = new AnalyticsManager.PlayerDeathEvent();
+        
+        AnalyticsManager.PlayerDeathEvent deathEvent = new AnalyticsManager.PlayerDeathEvent();
 		deathEvent.score.value = "" + (int) score;
 		AnalyticsManager.instance.LogEvent(deathEvent);
+        File.WriteAllText("Score.txt", deathEvent.score.value.ToString());
 		GameManager.instance.LoadScene ("GameOverMenu");
 	}
-	
-	//Applying the "Serializable" attribute of the "System" namespace makes the 
-	//(instance of the data type)'s values able to be edited in Unity's inspector
-	[System.Serializable]
+   
+
+    //Applying the "Serializable" attribute of the "System" namespace makes the 
+    //(instance of the data type)'s values able to be edited in Unity's inspector
+    [System.Serializable]
 	public class HazardEntry
 	{
 		public Hazard hazardPrefab;
