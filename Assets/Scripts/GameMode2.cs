@@ -6,7 +6,7 @@ using System.IO;
 using ClassExtensions;
 using Fove;
 
-public class GameMode2 : MonoBehaviour {
+public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
 
     private int counter=0; //counts thru an interval
     private int frequency = 10; //determines length of interval
@@ -46,8 +46,9 @@ public class GameMode2 : MonoBehaviour {
     public float colorLerpRate;
 
     // Use this for initialization
-    void Start ()
+    public override void Start ()
     {
+        base.Start();
         ring1 = GetComponent<GameObject>().gameObject;//need to reference these to rings in unity editor
         ring2 = GetComponent<GameObject>().gameObject;
         ring3 = GetComponent<GameObject>().gameObject;
@@ -63,6 +64,7 @@ public class GameMode2 : MonoBehaviour {
         
         //copy of gillys code for tunnel
         tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
+        StartCoroutine(PickNewTunnelColor());
     }
 	
 	// Update is called once per frame
@@ -227,17 +229,17 @@ public class GameMode2 : MonoBehaviour {
         //add code to get reference to ring that is lighting up
         if (target == 0)
         {
-            Vector3 v = ring1.GetComponent<GameObject>().transform.position;
+            Vector3 v = ring1.transform.position;
             return v;
         }
         else if (target == 1)
         {
-            Vector3 v = ring2.GetComponent<GameObject>().transform.position;
+            Vector3 v = ring2.transform.position;
             return v;
         }
         else if (target == 2)
         {
-            Vector3 v = ring3.GetComponent<GameObject>().transform.position;
+            Vector3 v = ring3.transform.position;
             return v;
         }
         else//should never reach this else, if it does, something is wrong
@@ -280,7 +282,7 @@ public class GameMode2 : MonoBehaviour {
             StartFlashTime = 0;
             FlashInterval = 0;
             FlashInterval2 = 0;
-            GameManager.instance.RestartScene();//need to replace this with code to move rings infront of player
+            MoveRings();//need to replace this with code to move rings infront of player
         }
 
 
@@ -344,7 +346,24 @@ public class GameMode2 : MonoBehaviour {
         tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
 
     }
-
+    public void MoveRings()
+    {
+        if (PlayerShip.instance.trs.position.z > ring1.transform.position.z)
+        {
+            ring1.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring1.transform.position.z) * 2; //fix this value to move forward in front of player
+            ring2.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring2.transform.position.z) * 2;
+            ring3.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring3.transform.position.z) * 2;
+        }
+    }
+    public virtual IEnumerator PickNewTunnelColor()
+    {
+        while (true)
+        {
+            nextTunnelColor = ColorExtensions.RandomColor();
+            //This will make the coroutine "not run" for the number of game-seconds equal to pickNewColorRate
+            yield return new WaitForSeconds(pickNewColorRate);
+        }
+    }
     /*
     public void Test()
     {
