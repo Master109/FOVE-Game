@@ -158,6 +158,9 @@ MonoBehaviour:
   trs: {fileID: 27123195}
   formUrl: https://docs.google.com/forms/d/e/1FAIpQLSeLlprzN5JpdeMWS_a6hBJAV1DEC6UBoJWbxWBAbDxJoAES6A/formResponse
   _CustomAnalyticsEvent:
+    time:
+      fieldNameInForm: entry.292042343
+      value: 
     name:
       fieldNameInForm: entry.1145409070
       value: Gilead Cosman
@@ -168,6 +171,9 @@ MonoBehaviour:
       fieldNameInForm: entry.1550088312
       value: (858)766-1202
   _LookAtObjectEvent:
+    time:
+      fieldNameInForm: 
+      value: 
     name:
       fieldNameInForm: 
       value: 
@@ -184,6 +190,9 @@ MonoBehaviour:
       fieldNameInForm: entry.1595239599
       value: 
   _LookAwayFromObjectEvent:
+    time:
+      fieldNameInForm: 
+      value: 
     name:
       fieldNameInForm: 
       value: 
@@ -200,6 +209,9 @@ MonoBehaviour:
       fieldNameInForm: entry.1595239599
       value: 
   _PlayerDeathEvent:
+    time:
+      fieldNameInForm: 
+      value: 
     name:
       fieldNameInForm: 
       value: 
@@ -213,6 +225,9 @@ MonoBehaviour:
       fieldNameInForm: entry.1785039152
       value: 
   _MovedIntoEvent:
+    time:
+      fieldNameInForm: 
+      value: 
     name:
       fieldNameInForm: 
       value: 

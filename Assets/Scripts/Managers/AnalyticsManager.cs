@@ -5,7 +5,6 @@ using System;
 using UnityEngine.Networking;
 using System.Reflection;
 
-[ExecuteInEditMode]
 public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 {
 	public Transform trs;
@@ -18,25 +17,29 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 	public LookAwayFromObjectEvent _LookAwayFromObjectEvent;
 	public PlayerDeathEvent _PlayerDeathEvent;
 	public MovedIntoEvent _MovedIntoEvent;
+	public Queue<CustomAnalyticsEvent> eventQueue = new Queue<CustomAnalyticsEvent>();
 	
 	public override void Start ()
 	{
-		if (Application.isPlaying)
+		trs.SetParent(null);
+		DontDestroyOnLoad(gameObject);
+		if (instance != null && instance != this)
 		{
-			trs.SetParent(null);
-			DontDestroyOnLoad(gameObject);
-			if (instance != null && instance != this)
-			{
-				Destroy(gameObject);
-				return;
-			}
+			Destroy(gameObject);
+			return;
 		}
 		base.Start ();
+	}
+	
+	void Update ()
+	{
+		_CustomAnalyticsEvent.time.value = DateTime.Now.ToString();
 	}
 	
 	[System.Serializable]
 	public class CustomAnalyticsEvent
 	{
+		public AnalyticsDataEntry time = new AnalyticsDataEntry();
 		public AnalyticsDataEntry name = new AnalyticsDataEntry();
 		public AnalyticsDataEntry email = new AnalyticsDataEntry();
 		public AnalyticsDataEntry phone = new AnalyticsDataEntry();
@@ -49,6 +52,8 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 		public virtual void Init ()
 		{
 			CustomAnalyticsEvent customEvent = (CustomAnalyticsEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.instance);
+			time.fieldNameInForm = customEvent.time.fieldNameInForm;
+			time.value = customEvent.time.value;
 			name.fieldNameInForm = customEvent.name.fieldNameInForm;
 			name.value = customEvent.name.value;
 			email.fieldNameInForm = customEvent.email.fieldNameInForm;
@@ -176,9 +181,24 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 		}
 	}
 	
-	public void LogEvent (CustomAnalyticsEvent customEvent)
+	public void AddEvent (CustomAnalyticsEvent customEvent)
 	{
-		StartCoroutine(LogEventRoutine (customEvent));
+		eventQueue.Enqueue(customEvent);
+	}
+	
+	public void LogAllEvents ()
+	{
+		StartCoroutine(LogAllEventsRoutine ());
+	}
+	
+	IEnumerator LogAllEventsRoutine ()
+	{
+		while (eventQueue.Count > 0)
+		{
+			CustomAnalyticsEvent customEvent = eventQueue.Dequeue();
+			yield return StartCoroutine(LogEventRoutine (customEvent));
+		}
+		yield break;
 	}
 	
 	IEnumerator LogEventRoutine (CustomAnalyticsEvent customEvent)
@@ -197,6 +217,7 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 			}
 		}
 		webRequest.Dispose();
+		yield break;
 	}
 	
 	public class AnalyticsDataEntry<T> : AnalyticsDataEntry
