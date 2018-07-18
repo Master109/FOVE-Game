@@ -9,7 +9,8 @@ public class LoadScoreData : MonoBehaviour {
     StreamReader Probe;
     private string temp;
     public ScrollRect SomeScrollRect;
-    
+    private Vector3 v = new Vector3(0, 0, 0);
+    private Quaternion q = new Quaternion(0f, 0f, 0f, 0f);
 
     //Rect TextArea = new Rect(0, 0, Screen.width, Screen.height);
     // Use this for initialization
@@ -41,12 +42,16 @@ public class LoadScoreData : MonoBehaviour {
             
             
             NewText.transform.SetParent(ContentChild.transform);
+            Text temp2 = NewText.GetComponent<Text>();
             // assign score to text
-            NewText.GetComponent<Text>().text = temp;
+            temp2.text = temp;
             //some formatting
-            NewText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            NewText.GetComponent<Text>().horizontalOverflow = HorizontalWrapMode.Overflow;
-            NewText.GetComponent<Text>().verticalOverflow = VerticalWrapMode.Overflow;
+            temp2.alignment = TextAnchor.MiddleRight;
+            temp2.horizontalOverflow = HorizontalWrapMode.Overflow;
+            temp2.verticalOverflow = VerticalWrapMode.Overflow;
+            temp2.transform.SetPositionAndRotation(v,q);
+            temp2.transform.localScale = Vector3.one;
+            temp2.transform.localPosition = Vector3.one;
         }
         Probe.Close();
     }
