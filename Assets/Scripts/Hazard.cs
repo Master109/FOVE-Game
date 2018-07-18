@@ -41,7 +41,7 @@ public class Hazard : MonoBehaviour, ISpawnable
 			return;
 		AnalyticsManager.MovedIntoEvent movedIntoEvent = new AnalyticsManager.MovedIntoEvent();
 		movedIntoEvent.objName.value = name;
-		AnalyticsManager.instance.LogEvent(movedIntoEvent);
+		AnalyticsManager.instance.AddEvent(movedIntoEvent);
 		ProceduralLevel.instance.LoseLevel ();
 	}
 }
