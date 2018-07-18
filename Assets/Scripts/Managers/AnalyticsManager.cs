@@ -72,6 +72,7 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 		public virtual void LogData ()
 		{
 			AnalyticsManager.instance.form = new WWWForm();
+			AnalyticsManager.instance.form.AddField(time.fieldNameInForm, time.value);
 			AnalyticsManager.instance.form.AddField(name.fieldNameInForm, name.value);
 			AnalyticsManager.instance.form.AddField(email.fieldNameInForm, email.value);
 			AnalyticsManager.instance.form.AddField(phone.fieldNameInForm, phone.value);
@@ -194,10 +195,7 @@ public class AnalyticsManager : SingletonMonoBehaviour<AnalyticsManager>
 	IEnumerator LogAllEventsRoutine ()
 	{
 		while (eventQueue.Count > 0)
-		{
-			CustomAnalyticsEvent customEvent = eventQueue.Dequeue();
-			yield return StartCoroutine(LogEventRoutine (customEvent));
-		}
+			yield return StartCoroutine(LogEventRoutine (eventQueue.Dequeue()));
 		yield break;
 	}
 	

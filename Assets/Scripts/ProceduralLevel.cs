@@ -42,6 +42,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	AnalyticsManager.LookAtObjectEvent previouslyLookedAt;
 	AnalyticsManager.LookAwayFromObjectEvent lookedAwayFrom;
 	Ray lookRay;
+	float startTime;
 	
 	public override void Start ()
 	{
@@ -51,6 +52,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		StartCoroutine(SpawnHazards ());
 		StartCoroutine(PickNewTunnelColor ());
 		StartCoroutine(SpawnPowerups ());
+		startTime = Time.time;
 	}
 	
 	public virtual void Update ()
@@ -64,7 +66,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 			tunnelTrs1 = _tunnelTrs2;
 		}
 		tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
-		score += Time.deltaTime;
+		score = (int) Time.time - startTime;
 		scoreText.text = "" + (int) score + "|" + BestScore;
 		if (ApplicationUser.instance.useMouse)
 			lookRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -99,7 +101,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		previouslyLookedAt.obj = obj;
 		previouslyLookedAt.objName.value = obj.Trs.name;
 		previouslyLookedAt.distance.value = "" + Vector3.Distance(obj.Trs.position, ApplicationUser.instance.cameraTrs.position);
-		AnalyticsManager.instance.LogEvent (previouslyLookedAt);
+		AnalyticsManager.instance.AddEvent (previouslyLookedAt);
 	}
 	
 	public virtual void AddLookAwayFromEvent ()
@@ -108,7 +110,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		lookAwayEvent.objName.value = previouslyLookedAt.obj.Trs.name;
 		lookAwayEvent.distance.value = "" + Vector3.Distance(previouslyLookedAt.obj.Trs.position, ApplicationUser.instance.cameraTrs.position);
 		previouslyLookedAt = null;
-		AnalyticsManager.instance.LogEvent (lookAwayEvent);
+		AnalyticsManager.instance.AddEvent (lookAwayEvent);
 	}
 	
 	//Use IEnumerator to set up a coroutine
@@ -192,7 +194,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
         
         AnalyticsManager.PlayerDeathEvent deathEvent = new AnalyticsManager.PlayerDeathEvent();
 		deathEvent.score.value = "" + (int) score;
-		AnalyticsManager.instance.LogEvent(deathEvent);
+		AnalyticsManager.instance.AddEvent(deathEvent);
+		AnalyticsManager.instance.LogAllEvents ();
         File.WriteAllText("Score.txt", deathEvent.score.value.ToString());
 		GameManager.instance.LoadScene ("GameOverMenu");
 	}
