@@ -6,7 +6,7 @@ using System.IO;
 using ClassExtensions;
 using Fove;
 
-public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
+public class GameMode2 : ProceduralLevel {
 
     private int counter=0; //counts thru an interval
     private int frequency = 10; //determines length of interval
@@ -35,20 +35,11 @@ public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
     private readonly float FlashDurSec = 0.1f;//duration of second flash
     private float FrameRate = 0;//output for delay between frames
     private readonly string Path = "Assets/FrameDelay.txt";//path for file to save frame delay in
-    //copying some of gilly's code for stage generation
-    public Transform tunnelTrs1;
-    public Transform tunnelTrs2;
-    public Collider tunnelCollider;
-    public float minZSpawnDist;
-    public Material tunnelMat;
-    Color nextTunnelColor;
-    public float pickNewColorRate;
-    public float colorLerpRate;
+    
 
     // Use this for initialization
     public override void Start ()
     {
-        base.Start();
         ring1 = GetComponent<GameObject>().gameObject;//need to reference these to rings in unity editor
         ring2 = GetComponent<GameObject>().gameObject;
         ring3 = GetComponent<GameObject>().gameObject;
@@ -65,16 +56,20 @@ public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
         //copy of gillys code for tunnel
         tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
         StartCoroutine(PickNewTunnelColor());
+       // ring1.GetComponent<Renderer>().material = tunnelMat;
     }
 	
 	// Update is called once per frame
-	void Update ()
+	public override void Update ()
     {
+        base.Update ();
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
-        Timing(); // assumes ~60 frames per second
+        //Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
-        TunnelUpdate();//call gilly's code to extend/repeat the tunnel
-
+        //call gilly's code to extend/repeat the tunnel
+        //test to see if ring color changes
+        
+        //Ring1Color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
 
 
     }
@@ -333,19 +328,7 @@ public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
 
     }
     
-    public void TunnelUpdate()
-    {
-        //copy of gilly's code for tunnel
-        if (PlayerShip.instance.trs.position.z > tunnelTrs2.position.z)
-        {
-            tunnelTrs1.position += Vector3.forward * (tunnelTrs2.position.z - tunnelTrs1.position.z) * 2;
-            Transform _tunnelTrs2 = tunnelTrs2;
-            tunnelTrs2 = tunnelTrs1;
-            tunnelTrs1 = _tunnelTrs2;
-        }
-        tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
-
-    }
+    
     public void MoveRings()
     {
         if (PlayerShip.instance.trs.position.z > ring1.transform.position.z)
@@ -355,15 +338,7 @@ public class GameMode2 : SingletonMonoBehaviour<GameMode2> {
             ring3.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring3.transform.position.z) * 2;
         }
     }
-    public virtual IEnumerator PickNewTunnelColor()
-    {
-        while (true)
-        {
-            nextTunnelColor = ColorExtensions.RandomColor();
-            //This will make the coroutine "not run" for the number of game-seconds equal to pickNewColorRate
-            yield return new WaitForSeconds(pickNewColorRate);
-        }
-    }
+    
     /*
     public void Test()
     {
