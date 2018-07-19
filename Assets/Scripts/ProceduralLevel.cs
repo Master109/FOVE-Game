@@ -9,7 +9,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 {
 	public HazardEntry[] hazardEntries;
 	public PowerupEntry[] powerupEntries;
-	public float difficultyIncreaseRate;
+	public AnimationCurve difficultyIncreaseRate;
+	public float difficultyIncreaseRateScaler;
 	public float currentDifficulty;
 	public Transform tunnelTrs1;
 	public Transform tunnelTrs2;
@@ -20,8 +21,6 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public float pickNewColorRate;
 	public float colorLerpRate;
 	public float maxDifficultyOffset;
-	public float newWaveRate;
-	float currentWaveDifficulty;
 	public Text scoreText;
 	public int BestScore
 	{
@@ -37,12 +36,14 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	public float powerupSpawnRate;
 	[HideInInspector]
 	public float score;
-	//public EndGameBtn endGame;
 	RaycastHit hit;
 	AnalyticsManager.LookAtObjectEvent previouslyLookedAt;
 	AnalyticsManager.LookAwayFromObjectEvent lookedAwayFrom;
 	Ray lookRay;
 	float startTime;
+	float hazardSpawnRate;
+	public float minHazardSpawnRate;
+	public float maxHazardSpawnRate;
 	
 	public override void Start ()
 	{
@@ -57,7 +58,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	
 	public virtual void Update ()
 	{
-		currentDifficulty += difficultyIncreaseRate * Time.deltaTime;
+		currentDifficulty = difficultyIncreaseRate.Evaluate(Time.time - startTime) * difficultyIncreaseRateScaler;
 		if (PlayerShip.instance.trs.position.z > tunnelTrs2.position.z)
 		{
 			tunnelTrs1.position += Vector3.forward * (tunnelTrs2.position.z - tunnelTrs1.position.z) * 2;
@@ -66,7 +67,8 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 			tunnelTrs1 = _tunnelTrs2;
 		}
 		tunnelMat.color = Color.Lerp(tunnelMat.color, nextTunnelColor, colorLerpRate * Time.deltaTime).SetAlpha(tunnelMat.color.a);
-		score = (int) Time.time - startTime;
+		//score = (int) Time.time - startTime;
+		score += Time.deltaTime;
 		scoreText.text = "" + (int) score + "|" + BestScore;
 		if (ApplicationUser.instance.useMouse)
 			lookRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -151,18 +153,16 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 		float difficulty = 0;
 		HazardEntry hazardEntry = null;
 		List<HazardEntry> hazardEntriesRemaining = new List<HazardEntry>();
+		float nextWaveTime = 0;
 		while (true)
 		{
-			if (currentDifficulty > currentWaveDifficulty + newWaveRate)
-			{
-				currentWaveDifficulty = currentDifficulty;
-				difficulty = 0;
-			}
 			hazardEntry = null;
-			hazardEntriesRemaining.Clear();
-			hazardEntriesRemaining.AddRange(hazardEntries);
+			hazardSpawnRate = Random.Range(minHazardSpawnRate, maxHazardSpawnRate);
+			yield return new WaitForSeconds(hazardSpawnRate);
 			while (difficulty < currentDifficulty)
 			{
+				hazardEntriesRemaining.Clear();
+				hazardEntriesRemaining.AddRange(hazardEntries);
 				do
 				{
 					hazardEntry = hazardEntriesRemaining[Random.Range(0, hazardEntriesRemaining.Count)];
@@ -188,10 +188,6 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	{
 		if ((int) score > BestScore)
 			BestScore = (int) score;
-        //save score to text file
-        //endGame = GetComponent<EndGameBtn>();
-        //endGame.SaveScore(score);
-        
         AnalyticsManager.PlayerDeathEvent deathEvent = new AnalyticsManager.PlayerDeathEvent();
 		deathEvent.score.value = "" + (int) score;
 		AnalyticsManager.instance.AddEvent(deathEvent);

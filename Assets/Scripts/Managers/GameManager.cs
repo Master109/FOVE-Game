@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+	public static bool paused;
+	
 	public virtual void LoadScene (string sceneName)
 	{
 		SceneManager.LoadScene(sceneName);
@@ -50,8 +52,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 		SceneManager.UnloadSceneAsync(sceneName);
 	}
 	
-	public virtual void SetTimeScale (float timeScale)
+	public virtual void SetPaused (bool paused)
 	{
-		Time.timeScale = timeScale;
+		GameManager.paused = paused;
+		if (paused)
+			Time.timeScale = 0;
+		else
+			SettingsMenu.instance.SetGameSpeed ();
 	}
 }
