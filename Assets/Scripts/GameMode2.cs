@@ -40,13 +40,11 @@ public class GameMode2 : ProceduralLevel {
     // Use this for initialization
     public override void Start ()
     {
-        ring1 = GetComponent<GameObject>().gameObject;//need to reference these to rings in unity editor
-        ring2 = GetComponent<GameObject>().gameObject;
-        ring3 = GetComponent<GameObject>().gameObject;
+        
         RingDefault = Color.yellow;//assign colors, can change later if needed
         RingLight1 = Color.red;
         RingLight2 = Color.cyan;
-        Ring1Color = ring1.GetComponent<Renderer>().material.color;
+        Ring1Color = ring1.GetComponent<Renderer>().material.color;//set up ring referenes so dont need to constantly call GetComponent
         Ring2Color = ring2.GetComponent<Renderer>().material.color;
         Ring3Color = ring3.GetComponent<Renderer>().material.color;
         Ring1Color = RingDefault;//sets rings to default color
@@ -64,9 +62,9 @@ public class GameMode2 : ProceduralLevel {
     {
         base.Update ();
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
-        //Timing(); // assumes ~60 frames per second
+        Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
-        //call gilly's code to extend/repeat the tunnel
+       
         //test to see if ring color changes
         
         //Ring1Color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
@@ -247,7 +245,7 @@ public class GameMode2 : ProceduralLevel {
     public void Timing()
     {
         StartFlashTime += Time.deltaTime;
-        if(StartFlashTime>FlashGap && StartFlashTime<FlashGap+FlashDurPrim)
+        if(StartFlashTime>=FlashGap && StartFlashTime<FlashGap+FlashDurPrim)
         {
             if (!FlashingPrimary)//flash if not already flashing
             {
@@ -256,11 +254,11 @@ public class GameMode2 : ProceduralLevel {
             FlashInterval += Time.deltaTime;
         }
         
-        if (FlashInterval > FlashDurPrim)//reset rings after flashing
+        if (FlashInterval >= FlashDurPrim)//reset rings after flashing
         {
             ResetRings();
         }
-        if(StartFlashTime>FlashGap+FlashDurPrim)//second flash
+        if(StartFlashTime>=FlashGap+FlashDurPrim)//second flash
         {
             if (!FlashingSecondary)// flash if not flashing
             {
@@ -268,7 +266,7 @@ public class GameMode2 : ProceduralLevel {
             }
             FlashInterval2 += Time.deltaTime;
         }
-        if(FlashInterval2>FlashDurSec)//reset rings after second flash
+        if(FlashInterval2>=FlashDurSec)//reset rings after second flash
         {
             ResetRings();
         }
@@ -277,7 +275,7 @@ public class GameMode2 : ProceduralLevel {
             StartFlashTime = 0;
             FlashInterval = 0;
             FlashInterval2 = 0;
-            MoveRings();//need to replace this with code to move rings infront of player
+            MoveRings();// move rings infront of player
         }
 
 
