@@ -7,7 +7,8 @@ public class Gamemode2ship : PlayerShip {
 	// Use this for initialization
 	public override void Start () {
         base.Start();
-
+        moveSpeed = 8;
+        rotateRate = 40;
 	}
 	
 	// Update is called once per frame
@@ -16,4 +17,5 @@ public class Gamemode2ship : PlayerShip {
         HandleRotation();
         HandleMovement();
     }
+
 }

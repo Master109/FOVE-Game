@@ -21,12 +21,12 @@ public class GameMode2 : ProceduralLevel {
     public GameObject ring2;
     public GameObject ring3;
     private int target=0;//which ring lights up for player to fly thru
-    Color RingDefault;//color references 
-    Color RingLight1;
-    Color RingLight2;
-    Color Ring1Color;
-    Color Ring2Color;
-    Color Ring3Color;
+    public Color RingDefault;//color references 
+    public Color RingLight1;
+    public Color RingLight2;
+    public Color Ring1Color;
+    public Color Ring2Color;
+    public Color Ring3Color;
     private float StartFlashTime = 0;//timer for current itereation
     private float FlashInterval = 0;//timmer to compare first flash duration
     private float FlashInterval2 = 0;//timer to compare second flash duration
@@ -35,7 +35,10 @@ public class GameMode2 : ProceduralLevel {
     private readonly float FlashDurSec = 0.1f;//duration of second flash
     private float FrameRate = 0;//output for delay between frames
     private readonly string Path = "Assets/FrameDelay.txt";//path for file to save frame delay in
-    
+    private Vector3 RingMovement = new Vector3(0, 0, 20);
+    public Transform Ring1trs;
+    public Transform Ring2trs;
+    public Transform Ring3trs;
 
     // Use this for initialization
     public override void Start ()
@@ -44,13 +47,18 @@ public class GameMode2 : ProceduralLevel {
         RingDefault = Color.yellow;//assign colors, can change later if needed
         RingLight1 = Color.red;
         RingLight2 = Color.cyan;
-        Ring1Color = ring1.GetComponent<Renderer>().material.color;//set up ring referenes so dont need to constantly call GetComponent
-        Ring2Color = ring2.GetComponent<Renderer>().material.color;
-        Ring3Color = ring3.GetComponent<Renderer>().material.color;
+        //Ring1Color = ring1.GetComponent<Renderer>().material.color;//set up ring referenes so dont need to constantly call GetComponent
+        //Ring2Color = ring2.GetComponent<Renderer>().material.color;
+        //Ring3Color = ring3.GetComponent<Renderer>().material.color;
+        /*
         Ring1Color = RingDefault;//sets rings to default color
         Ring2Color = RingDefault;
         Ring3Color = RingDefault;
         
+        Ring1Color =  ring1.GetComponent<Renderer>().material.color;
+        ring1.GetComponent<Renderer>().material.color = RingLight1;
+        Ring2Color = ring1.GetComponent<Renderer>().material.color;
+        */
         //copy of gillys code for tunnel
         tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
         StartCoroutine(PickNewTunnelColor());
@@ -64,12 +72,17 @@ public class GameMode2 : ProceduralLevel {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
         Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
-       
-        //test to see if ring color changes
-        
+        //ringdefault.color = Color.red;
+        //ring1.GetComponent<Renderer>().materials = ringtest;
+        //ring1.GetComponent<Renderer>().material = ringflash1;
+        //ring1.GetComponent<Renderer>().material.shader = Shader.Find("Specular");
+        //ring1.GetComponent<Renderer>().material.SetColor("_SpecColor", Color.red);
         //Ring1Color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
-
-
+        //ringdefault.color = Color.red;
+        //ring1.GetComponent<Renderer>().material.color = Color.red;
+        // MoveRings(); // try adding score text or otherwise fixing the reference
+        //ring1.GetComponent<Renderer>().material.color = Color.red;
+        
     }
     /* //frame timing ver
     public void RingFlashTiming() 
@@ -148,48 +161,48 @@ public class GameMode2 : ProceduralLevel {
         if(i==0)
         {
             //light up left ring
-            Ring1Color = RingLight1;
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==1)
         {
             //light up middle ring
-            Ring2Color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==2)
         {
             //light up right ring
-            Ring3Color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==3)
         {
             //light up left and middle ring
-            Ring1Color = RingLight1;
-            Ring2Color = RingLight1;
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==4)
         {
             //light up left and right ring
-            Ring1Color = RingLight1;
-            Ring3Color = RingLight1;
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==5)
         {
             //light up middle and right ring
-            Ring2Color = RingLight1;
-            Ring3Color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==6)
         {
             //light up left right and middle ring
-            Ring1Color = RingLight1;
-            Ring2Color = RingLight1;
-            Ring3Color = RingLight1;
+            ring1.GetComponent<Renderer>().material.color = RingLight1;
+            ring2.GetComponent<Renderer>().material.color = RingLight1;
+            ring3.GetComponent<Renderer>().material.color = RingLight1;
             FlashingPrimary = true;
         }
         else if(i==7)
@@ -283,9 +296,9 @@ public class GameMode2 : ProceduralLevel {
 
     public void ResetRings()//resets ring values to default state
     {
-        Ring1Color = RingDefault;
-        Ring2Color = RingDefault;
-        Ring3Color = RingDefault;
+        ring1.GetComponent<Renderer>().material.color = RingDefault;
+        ring2.GetComponent<Renderer>().material.color = RingDefault;
+        ring3.GetComponent<Renderer>().material.color = RingDefault;
         FlashingPrimary = false;
         FlashingSecondary = false;
     }
@@ -329,11 +342,17 @@ public class GameMode2 : ProceduralLevel {
     
     public void MoveRings()
     {
-        if (PlayerShip.instance.trs.position.z > ring1.transform.position.z)
+        //float temp = PlayerShip.instance.trs.position.z;
+        //float temp2 = Ring1trs.position.z;
+        //string temp3 = temp.ToString() + "\t" + temp2.ToString() + Environment.NewLine;
+        //File.AppendAllText("Assets/RingTest.txt", temp3);
+        if (PlayerShip.instance.trs.position.z > Ring1trs.position.z|| PlayerShip.instance.trs.position.z > Ring2trs.position.z|| PlayerShip.instance.trs.position.z > Ring3trs.position.z)
         {
-            ring1.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring1.transform.position.z) * 2; //fix this value to move forward in front of player
-            ring2.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring2.transform.position.z) * 2;
-            ring3.transform.position += Vector3.forward * (PlayerShip.instance.trs.position.z - ring3.transform.position.z) * 2;
+            //File.AppendAllText("Assets/RingTest.txt", "Check Returns True" + Environment.NewLine);
+            //ring1.transform.position += Vector3.forward * 30; //it moves
+            Ring1trs.position += RingMovement;
+            Ring2trs.position += RingMovement;
+            Ring3trs.position += RingMovement;
         }
     }
     
