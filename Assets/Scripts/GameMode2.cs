@@ -191,6 +191,7 @@ public class GameMode2 : ProceduralLevel {
         if(StartFlashTime>FlashGap+FlashDurPrim+FlashDurSec && (PlayerShip.instance.trs.position.z > Ring1trs.position.z || PlayerShip.instance.trs.position.z > Ring2trs.position.z || PlayerShip.instance.trs.position.z > Ring3trs.position.z))//reset timers for next set of rings
         {
             //if(PlayerShip.instance.trs.position.x == ring2.transform.position.x)
+            CompareAttention();//output data
             ResetShipPosition();//move ship to middle so it has equal chance to get to all rings
             ResetInterval();//reset timers
             MoveRings();// move rings infront of player
@@ -235,7 +236,8 @@ public class GameMode2 : ProceduralLevel {
     public void CompareAttention()
     {
         float temp = Vector3.Distance(getRingPosition(), getEyePosition());
-        File.AppendAllText("Attention.txt", temp.ToString());
+        string temp2 = temp.ToString() + Environment.NewLine;
+        File.AppendAllText("Attention.txt", temp2);//change this to output to google doc
 
         
         //add code here to compare the eye position against the ring position
