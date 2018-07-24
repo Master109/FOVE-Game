@@ -8,11 +8,7 @@ using Fove;
 
 public class GameMode2 : ProceduralLevel {
 
-    private int counter=0; //counts thru an interval
-    private int frequency = 10; //determines length of interval
-    private int CounterCounter = 0; //counts intervals
-    private int FlashDurationPrimary = 40; //determines initial flash duration of rings
-    private int FlashDurationSecondary = 10; //determines flash duration of second flash on ring
+   
     private System.Random rnd = new System.Random(); //random number generator for picking rings
     private int choice = 0; //determines which rings light up
     private bool FlashingPrimary = false; //determines if first flash is active
@@ -24,9 +20,6 @@ public class GameMode2 : ProceduralLevel {
     public Color RingDefault;//color references 
     public Color RingLight1;
     public Color RingLight2;
-    public Color Ring1Color;
-    public Color Ring2Color;
-    public Color Ring3Color;
     private float StartFlashTime = 0;//timer for current itereation
     private float FlashInterval = 0;//timmer to compare first flash duration
     private float FlashInterval2 = 0;//timer to compare second flash duration
@@ -47,22 +40,11 @@ public class GameMode2 : ProceduralLevel {
         RingDefault = Color.yellow;//assign colors, can change later if needed
         RingLight1 = Color.red;
         RingLight2 = Color.cyan;
-        //Ring1Color = ring1.GetComponent<Renderer>().material.color;//set up ring referenes so dont need to constantly call GetComponent
-        //Ring2Color = ring2.GetComponent<Renderer>().material.color;
-        //Ring3Color = ring3.GetComponent<Renderer>().material.color;
-        /*
-        Ring1Color = RingDefault;//sets rings to default color
-        Ring2Color = RingDefault;
-        Ring3Color = RingDefault;
-        
-        Ring1Color =  ring1.GetComponent<Renderer>().material.color;
-        ring1.GetComponent<Renderer>().material.color = RingLight1;
-        Ring2Color = ring1.GetComponent<Renderer>().material.color;
-        */
+       
         //copy of gillys code for tunnel
         tunnelMat.color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
         StartCoroutine(PickNewTunnelColor());
-       // ring1.GetComponent<Renderer>().material = tunnelMat;
+      
     }
 	
 	// Update is called once per frame
@@ -72,90 +54,11 @@ public class GameMode2 : ProceduralLevel {
         choice = rnd.Next(8);// cycles thru random numbers for determining which rings flash
         Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
-        //ringdefault.color = Color.red;
-        //ring1.GetComponent<Renderer>().materials = ringtest;
-        //ring1.GetComponent<Renderer>().material = ringflash1;
-        //ring1.GetComponent<Renderer>().material.shader = Shader.Find("Specular");
-        //ring1.GetComponent<Renderer>().material.SetColor("_SpecColor", Color.red);
-        //Ring1Color = ColorExtensions.RandomColor().SetAlpha(tunnelMat.color.a);
-        //ringdefault.color = Color.red;
-        //ring1.GetComponent<Renderer>().material.color = Color.red;
-        // MoveRings(); // try adding score text or otherwise fixing the reference
-        //ring1.GetComponent<Renderer>().material.color = Color.red;
+        //MoveRings();//move rings infront of player if player passes
+        
         
     }
-    /* //frame timing ver
-    public void RingFlashTiming() 
-    {
-       if(counter>=frequency)//determines what happens at end of interval
-        {
-            counter = 0; //reset counter
-            RingChoice(choice);//randomly choose which rings to light up
-            
-            
-
-            CounterCounter++; //note interval pass
-            if(CounterCounter>frequency*10) //slowly increase the length of the interval
-            {
-                frequency += 5;
-            }
-        }
-       else
-        {
-            counter++;
-        }
-       if(counter>=FlashDurationPrimary)
-        {
-            ring1.GetComponent<Renderer>().material.color = RingDefault;
-            ring2.GetComponent<Renderer>().material.color = RingDefault;
-            ring3.GetComponent<Renderer>().material.color = RingDefault;
-            FlashingPrimary = false;
-        }
-       if(CounterCounter>FlashDurationSecondary)//seting up secondary flash on 1 ring
-        {
-            target = rnd.Next(3);
-            if(target==0)
-            {
-                ring1.GetComponent<Renderer>().material.color = RingLight2;
-                FlashingSecondary = true;
-            }
-            else if(target==1)
-            {
-                ring2.GetComponent<Renderer>().material.color = RingLight2;
-                FlashingSecondary = true;
-            }
-            else if(target==2)
-            {
-                ring3.GetComponent<Renderer>().material.color = RingLight2;
-                FlashingSecondary = true;
-            }
-            else
-            {
-                Application.Quit();
-            }
-        }
-       
-    }
-    public void Flashing()
-    {
-        //add code to reference ring object here
-
-        //add code to change the color of said ring object here
-
-        FlashDurationPrimary = 40 - (CounterCounter / 100);//this is to slowly decrement the duration of the flash
-        if(FlashDurationPrimary<1||FlashDurationSecondary<1) //reset when flash duration reaches 0
-        {
-            FlashDurationPrimary = 40;
-            FlashDurationSecondary = 10;
-            CounterCounter = 0;
-            
-        }
-        if(FlashDurationPrimary<=FlashDurationSecondary)//ensure second flash is always shorter than initial flash
-        {
-            FlashDurationSecondary--;
-        }
-    }
-    */
+    
     public void RingChoice(int i)
     {
         if(i==0)
@@ -283,11 +186,10 @@ public class GameMode2 : ProceduralLevel {
         {
             ResetRings();
         }
-        if(StartFlashTime>FlashGap+FlashDurPrim+FlashDurSec)//reset timers for next set of rings
+        if(StartFlashTime>FlashGap+FlashDurPrim+FlashDurSec && (PlayerShip.instance.trs.position.z > Ring1trs.position.z || PlayerShip.instance.trs.position.z > Ring2trs.position.z || PlayerShip.instance.trs.position.z > Ring3trs.position.z))//reset timers for next set of rings
         {
-            StartFlashTime = 0;
-            FlashInterval = 0;
-            FlashInterval2 = 0;
+            //if(PlayerShip.instance.trs.position.x == ring2.transform.position.x)
+                ResetInterval();
             MoveRings();// move rings infront of player
         }
 
@@ -308,17 +210,17 @@ public class GameMode2 : ProceduralLevel {
         target = rnd.Next(3);
         if (target == 0)
         {
-            Ring1Color = RingLight2;
+            ring1.GetComponent<Renderer>().material.color = RingLight2;
             FlashingSecondary = true;
         }
         else if (target == 1)
         {
-            Ring2Color = RingLight2;
+            ring2.GetComponent<Renderer>().material.color = RingLight2;
             FlashingSecondary = true;
         }
         else if (target == 2)
         {
-            Ring3Color = RingLight2;
+            ring3.GetComponent<Renderer>().material.color = RingLight2;
             FlashingSecondary = true;
         }
         else//should never reach this else, if it does, something is wrong
@@ -342,18 +244,21 @@ public class GameMode2 : ProceduralLevel {
     
     public void MoveRings()
     {
-        //float temp = PlayerShip.instance.trs.position.z;
-        //float temp2 = Ring1trs.position.z;
-        //string temp3 = temp.ToString() + "\t" + temp2.ToString() + Environment.NewLine;
-        //File.AppendAllText("Assets/RingTest.txt", temp3);
+        
         if (PlayerShip.instance.trs.position.z > Ring1trs.position.z|| PlayerShip.instance.trs.position.z > Ring2trs.position.z|| PlayerShip.instance.trs.position.z > Ring3trs.position.z)
         {
-            //File.AppendAllText("Assets/RingTest.txt", "Check Returns True" + Environment.NewLine);
-            //ring1.transform.position += Vector3.forward * 30; //it moves
+            
             Ring1trs.position += RingMovement;
             Ring2trs.position += RingMovement;
             Ring3trs.position += RingMovement;
         }
+    }
+
+    public void ResetInterval()
+    {
+        StartFlashTime = 0;
+        FlashInterval = 0;
+        FlashInterval2 = 0;
     }
     
     /*
