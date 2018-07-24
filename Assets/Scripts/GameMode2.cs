@@ -32,6 +32,7 @@ public class GameMode2 : ProceduralLevel {
     public Transform Ring1trs;
     public Transform Ring2trs;
     public Transform Ring3trs;
+    private Vector3 ResetPosition = new Vector3(0,-4,0);
 
     // Use this for initialization
     public override void Start ()
@@ -127,9 +128,10 @@ public class GameMode2 : ProceduralLevel {
         return FlashingSecondary;
     }
 
-    public void getEyePosition()//need to change return type and add return statement
+    public Vector3 getEyePosition()//need to change return type and add return statement
     {
         FoveInterface2.instance.GetGazeConvergence_Raw();
+        return lookRay.GetPoint(Vector3.Distance(PlayerShip.instance.trs.position, getRingPosition()));
         //Vector3 v = (Vector3)FoveInterface2.instance.GetGazeConvergence_Raw();
     }
 
@@ -189,7 +191,8 @@ public class GameMode2 : ProceduralLevel {
         if(StartFlashTime>FlashGap+FlashDurPrim+FlashDurSec && (PlayerShip.instance.trs.position.z > Ring1trs.position.z || PlayerShip.instance.trs.position.z > Ring2trs.position.z || PlayerShip.instance.trs.position.z > Ring3trs.position.z))//reset timers for next set of rings
         {
             //if(PlayerShip.instance.trs.position.x == ring2.transform.position.x)
-                ResetInterval();
+            ResetShipPosition();//move ship to middle so it has equal chance to get to all rings
+            ResetInterval();//reset timers
             MoveRings();// move rings infront of player
         }
 
@@ -231,6 +234,10 @@ public class GameMode2 : ProceduralLevel {
 
     public void CompareAttention()
     {
+        float temp = Vector3.Distance(getRingPosition(), getEyePosition());
+        File.AppendAllText("Attention.txt", temp.ToString());
+
+        
         //add code here to compare the eye position against the ring position
     }
     public void OutputFramerate()
@@ -260,7 +267,11 @@ public class GameMode2 : ProceduralLevel {
         FlashInterval = 0;
         FlashInterval2 = 0;
     }
-    
+    public void ResetShipPosition()
+    {
+        ResetPosition.z = PlayerShip.instance.trs.position.z;
+        PlayerShip.instance.trs.position = ResetPosition;
+    }
     /*
     public void Test()
     {

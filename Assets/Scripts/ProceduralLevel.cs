@@ -39,7 +39,7 @@ public class ProceduralLevel : SingletonMonoBehaviour<ProceduralLevel>
 	RaycastHit hit;
 	AnalyticsManager.LookAtObjectEvent previouslyLookedAt;
 	AnalyticsManager.LookAwayFromObjectEvent lookedAwayFrom;
-	Ray lookRay;
+	protected Ray lookRay;
 	float startTime;
 	float hazardSpawnRate;
 	public float minHazardSpawnRate;
