@@ -236,9 +236,9 @@ public class GameMode2 : ProceduralLevel {
     public void CompareAttention()
     {
         float temp = Vector3.Distance(getRingPosition(), getEyePosition());
-        string temp2 = temp.ToString() + Environment.NewLine;
-        File.AppendAllText("Attention.txt", temp2);//change this to output to google doc
-
+        //string temp2 = temp.ToString() + Environment.NewLine;
+        //File.AppendAllText("Attention.txt", temp2);//change this to output to google doc
+        StartCoroutine(Post(temp.ToString()));
         
         //add code here to compare the eye position against the ring position
     }
@@ -273,6 +273,17 @@ public class GameMode2 : ProceduralLevel {
     {
         ResetPosition.z = PlayerShip.instance.trs.position.z;
         PlayerShip.instance.trs.position = ResetPosition;
+    }
+    [SerializeField]
+    private string BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe9BD9MLLxFHKLziBnkJkkMa3f7o4RtwhQnTlgttovFCM_Gng/formResponse";
+
+    IEnumerator Post(string data)//writes data to google doc
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("entry.68499251", data);
+        byte[] rawData = form.data;
+        WWW www = new WWW(BASE_URL, rawData);
+        yield return www;
     }
     /*
     public void Test()
