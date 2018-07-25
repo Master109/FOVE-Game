@@ -60,7 +60,7 @@ public class GameMode2 : ProceduralLevel {
         
     }
     
-    public void RingChoice(int i)
+    public void RingChoice(int i)//lights up rings based on randomly generated number
     {
         if(i==0)
         {
@@ -132,12 +132,12 @@ public class GameMode2 : ProceduralLevel {
     {
         FoveInterface2.instance.GetGazeConvergence_Raw();
         return lookRay.GetPoint(Vector3.Distance(PlayerShip.instance.trs.position, getRingPosition()));
-        //Vector3 v = (Vector3)FoveInterface2.instance.GetGazeConvergence_Raw();
+        
     }
 
     public Vector3 getRingPosition()//may need to change return type depending of fove output
     {
-        //add code to get reference to ring that is lighting up
+        // code to get reference to ring that is lighting up
         if (target == 0)
         {
             Vector3 v = ring1.transform.position;
@@ -239,8 +239,8 @@ public class GameMode2 : ProceduralLevel {
         //string temp2 = temp.ToString() + Environment.NewLine;
         //File.AppendAllText("Attention.txt", temp2);//change this to output to google doc
         StartCoroutine(Post(temp.ToString()));
-        
-        //add code here to compare the eye position against the ring position
+        Score(temp);
+       
     }
     public void OutputFramerate()
     {
@@ -275,7 +275,7 @@ public class GameMode2 : ProceduralLevel {
         PlayerShip.instance.trs.position = ResetPosition;
     }
     [SerializeField]
-    private string BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe9BD9MLLxFHKLziBnkJkkMa3f7o4RtwhQnTlgttovFCM_Gng/formResponse";
+    private readonly string BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe9BD9MLLxFHKLziBnkJkkMa3f7o4RtwhQnTlgttovFCM_Gng/formResponse";
 
     IEnumerator Post(string data)//writes data to google doc
     {
@@ -285,11 +285,29 @@ public class GameMode2 : ProceduralLevel {
         WWW www = new WWW(BASE_URL, rawData);
         yield return www;
     }
-    /*
-    public void Test()
+
+    public void Score(float t)//basic score system
     {
-        FoveInterface2.instance.GetGazeConvergence();
-        FoveUnityUtils.GetUnityVector(FoveInterface2.instance.GazeConvergenceData);
+        if(t<10 && t>5)
+        {
+            score++;
+        }
+        else if(t<5 && t>1)
+        {
+            score += 3;
+        }
+        else if(t<1)
+        {
+            score += 5;
+        }
+        else if(t>10)
+        {
+            score += 0;
+        }
+        else//should never reach this else, if it does something is wrong
+        {
+            Application.Quit();
+        }
     }
-    */
+    
 }
