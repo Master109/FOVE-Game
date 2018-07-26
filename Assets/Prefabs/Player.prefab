@@ -318,8 +318,8 @@ MonoBehaviour:
   trs: {fileID: 4917123335816494}
   rigid: {fileID: 54878379154301844}
   collider: {fileID: 64199910027720894}
-  moveSpeed: 1
-  rotateRate: 1
+  moveSpeed: 0.75
+  rotateRate: 0.75
   addToMoveSpeed: 0
   addToRotateRate: 0
 --- !u!114 &114131055112337118
@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trs: {fileID: 4671932422542494}
-  useMouse: 1
+  useMouse: 0
   cursor: {fileID: 0}
   cursorHoverTimerIndicator: {fileID: 0}
   cameraTrs: {fileID: 4009267536673914}
