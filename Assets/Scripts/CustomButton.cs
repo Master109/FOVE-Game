@@ -36,7 +36,7 @@ public class CustomButton : MonoBehaviour
 	{
 		if (!Application.isPlaying)
 			return;
-		hoveringOver = IsHoveringOver;
+		hoveringOver = IsHoveringOver && button.IsInteractable();
 		if (hoveringOver)
 		{
 			hoverTimeRemainingToPress -= Time.deltaTime;

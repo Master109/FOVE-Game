@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
 	public static bool paused;
-	
+	public Text frameRateText;
+
+	public virtual void Update ()
+	{
+		frameRateText.text = "" + (int) (1f / Time.deltaTime);
+	}
+
 	public virtual void LoadScene (string sceneName)
 	{
 		SceneManager.LoadScene(sceneName);
