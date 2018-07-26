@@ -29,7 +29,7 @@ public class GameMode2 : ProceduralLevel {
     private float FrameRate = 0;//output for delay between frames
     private readonly string Path = "Assets/FrameDelay.txt";//path for file to save frame delay in
     private Vector3 RingMovement = new Vector3(0, 0, 20);
-    public Transform Ring1trs;
+    public Transform Ring1trs;// ring positions
     public Transform Ring2trs;
     public Transform Ring3trs;
     private Vector3 ResetPosition = new Vector3(0,-4,0);
@@ -292,11 +292,11 @@ public class GameMode2 : ProceduralLevel {
         {
             score++;
         }
-        else if(t<5 && t>1)
+        else if(t<=5 && t>1)
         {
             score += 3;
         }
-        else if(t<1)
+        else if(t<=1)
         {
             score += 5;
         }
