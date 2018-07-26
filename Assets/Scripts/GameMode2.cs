@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using ClassExtensions;
+using UnityEngine.SceneManagement;
 using Fove;
 
 public class GameMode2 : ProceduralLevel {
@@ -33,6 +34,7 @@ public class GameMode2 : ProceduralLevel {
     public Transform Ring2trs;
     public Transform Ring3trs;
     private Vector3 ResetPosition = new Vector3(0,-4,0);
+    bool IsPause = false;
 
     // Use this for initialization
     public override void Start ()
@@ -56,7 +58,7 @@ public class GameMode2 : ProceduralLevel {
         Timing(); // assumes ~60 frames per second
         OutputFramerate();//determines seconds per frame
         //MoveRings();//move rings infront of player if player passes
-        
+        Pause();
         
     }
     
@@ -309,5 +311,24 @@ public class GameMode2 : ProceduralLevel {
             Application.Quit();
         }
     }
-    
+    public void Pause()
+    {
+        //check if esc key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //invert is pause value
+            IsPause = !IsPause;
+            //pause or unpause game
+            if (IsPause)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
+        }
+        if (IsPause)
+        {
+            //open pause menu when game is paused
+            SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+        }
+    }
+
 }
