@@ -318,8 +318,8 @@ MonoBehaviour:
   trs: {fileID: 4917123335816494}
   rigid: {fileID: 54878379154301844}
   collider: {fileID: 64199910027720894}
-  moveSpeed: 0.75
-  rotateRate: 0.75
+  moveSpeed: 1
+  rotateRate: 1
   addToMoveSpeed: 0
   addToRotateRate: 0
 --- !u!114 &114131055112337118

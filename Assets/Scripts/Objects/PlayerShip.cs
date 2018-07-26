@@ -31,8 +31,8 @@ public class PlayerShip : SingletonMonoBehaviour<PlayerShip>
 	
 	public virtual void HandleDifficulty ()
 	{
-		moveSpeed = initMoveSpeed * ProceduralLevel.instance.currentDifficulty + addToMoveSpeed;
-		rotateRate = initRotateRate * ProceduralLevel.instance.currentDifficulty + addToRotateRate;
+		moveSpeed = initMoveSpeed * Time.timeSinceLevelLoad + addToMoveSpeed;
+		rotateRate = initRotateRate * Time.timeSinceLevelLoad + addToRotateRate;
 	}
 	
 	public virtual void HandleRotation ()
